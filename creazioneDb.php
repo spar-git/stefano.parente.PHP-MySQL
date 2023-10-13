@@ -113,5 +113,47 @@ else {
 
 echo mysqli_errno($mysqliConnection);
 
+//////////////da qui inizia il popolamento delle tabelle////////////////////
+
+// popolamento tabella utenti
+$sql = "INSERT INTO $STuser_table_name
+	(username, password, sommeSpese)
+	VALUES
+	(\"stefano\", \"pass123\", \"0\")
+	";
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento User eseguito\n");
+else {
+    printf("Impossibile popolare tabella STuser.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STuser_table_name
+	(username, password, sommeSpese)
+	VALUES
+	(\"paolo\", \"pass456\", \"0\")
+	";
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento User eseguito\n");
+else {
+    printf("Impossibile popolare tabella STuser.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STuser_table_name
+	(username, password, sommeSpese)
+	VALUES
+	(\"sara\", \"pass789\", \"0\")
+	";
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento User eseguito\n");
+else {
+    printf("Impossibile popolare tabella STuser.\n");
+  exit();
+}
+
 
 
