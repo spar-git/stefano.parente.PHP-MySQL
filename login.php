@@ -20,13 +20,48 @@ if (isset($_POST['invio']))                                         //è stato d
       session_start();
       $_SESSION['userName']=$_POST['userName'];
       $_SESSION['dataLogin']=time();
-      $_SESSION['numeroUtente']=$row['userId'];
-      $_SESSION['spesaFinora']=$row['sommeSpese'];
+      $_SESSION['userId']=$row['userId'];
+      $_SESSION['tipologia']=$row['tipologia'];     //ce la portiamo nella pagina iniziale per capire i privilegi dell'utente (se 1 utente, se 2 gestore, se 3 admin)
+      $_SESSION['sommeSpese']=$row['sommeSpese'];
+      $_SESSION['puntiFedeltà']=$row['puntiFedeltà'];
       $_SESSION['accessoPermesso']=1000;
 
-      header('Location: paginaIniziale.php');    // ....e accediamo alla pagina iniziale
-      exit();
+      if ($row['stato']==1) {                 //se TRUE l'utente è attivo e può accedere al sito, se FALSE vedere a fine pagina
+        header('Location: paginaIniziale.php');    
+        exit();
+      } 
     }
     else
-    echo "<p>I dati inseriti non sono corretti!!</p>";             //caso in cui i dati inseriti non sono corretti 
+    echo "<p>I dati inseriti non sono corretti, ritenta.</p>";           //caso in cui i dati inseriti non sono corretti 
   }
+?>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pagina di login</title>
+</head>
+
+<body>
+<h1 style="color:red; text-align: center; border: solid;" > Benvenuto su MediaShop Online!</h1>
+<hr />
+<h3 style="text-align:center; margin-top: 20px;  font-family: Arial, sans-serif;">Accedi inserendo nome utente e password<h3>
+
+<form action="<?php $_SERVER['PHP_SELF']?>" method="post">
+<h4>
+  username: <input style="padding: 2ex;" type="text" name="userName" size="25" />
+  password: <input style="padding: 2ex;" type="text" name="password" size="25" />
+
+  <input type="submit" name="invio" value="accedi">
+  <input type="reset" name="reset" value="reset">
+</h4>
+<? php
+    if ($row['stato']==0)                                //altrimenti l'utente è bannato e non può accedere al sito
+      <h1 style="color:red; background-color: black; padding: 4ex;"> !!! Sei stato bannato dal sito dall&lsquoadmin. Pertanto non potrai pi&uacute accederne al contenuto !!!</h1>
+?>
+</form>
+
+</body>
+</html>
