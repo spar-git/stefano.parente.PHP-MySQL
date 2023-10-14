@@ -40,10 +40,10 @@ $sqlQuery = "CREATE TABLE if not exists $STuser_table_name (";
 $sqlQuery.= "userId int NOT NULL auto_increment, primary key (userId), ";
 $sqlQuery.= "userName varchar (50) NOT NULL, ";
 $sqlQuery.= "password varchar (32) NOT NULL, ";
-$sqlQuery.= "tipologia smallint";        //se 1 utente, se 2 gestore, se 3 admin
-$sqlQuery.= "stato boolean";            //se 1 attivo, se 0 bannato
-$sqlQuery.= "sommeSpese float";         //ricorda la somma di tutte le spese dell'utente 
-$sqlQuery.= "puntiFedeltà float";      //acquisisce punti in base alle spese (possono essere azzerati se utilizzati per lo sconto)
+$sqlQuery.= "tipologia smallint";                        //se 1 utente, se 2 gestore, se 3 admin
+$sqlQuery.= "sommeSpese float";                          //ricorda la somma di tutte le spese dell'utente
+$sqlQuery.= "puntiFedeltà float";                        //acquisisce punti in base alle spese (possono essere azzerati se utilizzati per lo sconto)
+$sqlQuery.= "stato boolean";                             //se 1 attivo, se 0 bannato
 $sqlQuery.= ");";                                 
 
 echo "<P>$sqlQuery</P>";
@@ -61,7 +61,7 @@ $sqlQuery.= "movieId int NOT NULL auto_increment, primary key (movieId), ";
 $sqlQuery.= "title varchar (50) NOT NULL, ";
 $sqlQuery.= "costoMovie float";
 $sqlQuery.= "genere varchar (20) NOT NULL,";    //genere del film
-$sqlQuery.= "numDownload bigint ";              //numero di download del film (bigint per essere ottimisti nelle vendite)
+$sqlQuery.= "Movie bigint ";                  //numero di voti del film (utile anche per calcolare le stelle)
 $sqlQuery.= "stelle smallint";                  //valutazione utenti complessiva del film  
 $sqlQuery.= ");";
 
@@ -80,7 +80,7 @@ $sqlQuery.= "musicId int NOT NULL auto_increment, primary key (musictId), ";
 $sqlQuery.= "title varchar (50) NOT NULL, ";
 $sqlQuery.= "costoMusic float ";
 $sqlQuery.= "autore varchar (50) NOT NULL, ";             //nome dell'autore del brano
-$sqlQuery.= "numDownload bigint ";                        //numero di download del brano (bigint per essere ottimisti nelle vendite) 
+$sqlQuery.= "numvoti bigint ";                      ////numero di recensioni del brano (utile anche per calcolare le stelle) 
 $sqlQuery.= "stelle smallint";                            //valutazione utenti complessiva del brano 
 $sqlQuery.= ");";
 
@@ -117,13 +117,13 @@ echo mysqli_errno($mysqliConnection);
 
 // popolamento tabella utenti
 $sql = "INSERT INTO $STuser_table_name
-	(username, password, sommeSpese)
+	(username, password, tipologia, sommeSpese, puntiFedeltà, stato)
 	VALUES
 	(\"stefano\", \"pass123\", \"0\")
 	";
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
-    printf("Polamento User eseguito\n");
+    printf("Polamento user eseguito!!!\n");
 else {
     printf("Impossibile popolare tabella STuser.\n");
   exit();
@@ -136,7 +136,7 @@ $sql = "INSERT INTO $STuser_table_name
 	";
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
-    printf("Polamento User eseguito\n");
+    printf("Polamento user eseguito!!!\n");
 else {
     printf("Impossibile popolare tabella STuser.\n");
   exit();
@@ -149,11 +149,198 @@ $sql = "INSERT INTO $STuser_table_name
 	";
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
-    printf("Polamento User eseguito\n");
+    printf("Polamento user eseguito!!!\n");
 else {
     printf("Impossibile popolare tabella STuser.\n");
   exit();
 }
 
+//popolamento tabella film
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMovie, genere, numVotiMovie, stelle)
+	VALUES
+	(\"Il buono, il brutto, il cattivo\", \"20\", \"Western\", \"0\", \"0\")
+	";
+echo $sql;
 
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento movie eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmovie.\n");
+  exit();
+}
 
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMovie, genere, numVotiMovie, stelle)
+	VALUES
+	(\"Metropolis\", \"18\", \"Fantascienza\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento movie eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmovie.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMovie, genere, numVotiMovie, stelle)
+	VALUES
+	(\"Il padrino\", \"20\", \"Drammatico\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento movie eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmovie.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMovie, genere, numVotiMovie, stelle)
+	VALUES
+	(\"C'era una volta il west\", \"22\", \"Western\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento movie eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmovie.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMovie, genere, numVotiMovie, stelle)
+	VALUES
+	(\"Eva contro Eva\", \"25\", \"Drammatico\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento movie eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmovie.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMovie, genere, numVotiMovie, stelle)
+	VALUES
+	(\"2001: Odissea nello spazio\", \"28\", \"Fantascienza\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento movie eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmovie.\n");
+  exit();
+}
+
+//popolamento tabella musica
+$sql = "INSERT INTO $STmusic_table_name
+	(title, costoMusic, autore, numVotiMusic, stelle)
+	VALUES
+	(\"Gli anni\", \"4\", \"Max Pezzali\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento music eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmusic.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMusic, autore, numVotiMusic, stelle)
+	VALUES
+	(\"Amor mio\", \"2\", \"Mina\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento music eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmusic.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMusic, autore, numVotiMusic, stelle)
+	VALUES
+	(\"L'ombelico del mondo\", \"7\", \"Jovanotti\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento music eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmusic.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMusic, autore, numVotiMusic, stelle)
+	VALUES
+	(\"La storia siamo noi\", \"4\", \"Francesco De Gregori\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento music eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmusic.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMusic, autore, numVotiMusic, stelle)
+	VALUES
+	(\"Sally\", \"6\", \"Vasco Rossi\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento music eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmusic.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMusic, autore, numVotiMusic, stelle)
+	VALUES
+	(\"Mentre tutto scorre\", \"3\", \"Negramaro\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento music eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmusic.\n");
+  exit();
+}
+
+$sql = "INSERT INTO $STmovie_table_name
+	(title, costoMusic, autore, numVotiMusic, stelle)
+	VALUES
+	(\"America\", \"5\", \"Gianna Nannini\", \"0\", \"0\")
+	";
+echo $sql;
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento music eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STmusic.\n");
+  exit();
+}
+
+//niente popolamento tabella recensioni, l'abbiamo creata ma verrà popolata dagli utenti all'occorrenza
+
+mysqli_close($mysqliConnection);
+?>
+</body></html>
