@@ -6,7 +6,7 @@ $STmusic_table_name = "STmusic";                //tabella musica
 $STrecensioni_table_name = "STrecensioni";      //tabella recensioni
 
 //tentativo connessione
-$mysqliConnection = new mysqli("localhost", "archer", "archer", $db_name);      //tentativo connessione
+$mysqliConnection = new mysqli("localhost", "archer", "archer");      //tentativo connessione
 
 // controllo della connessione
 if (mysqli_connect_errno()) {
