@@ -1,5 +1,5 @@
 <?php
-require_once("./connessione.php")
+require_once("./connessione.php");
 
 if (isset($_POST['invio']))                                         //è stato dato l'invio?...    
   if (empty($_POST['userName']) || empty($_POST['password']))       //...sono stati inseriti username e password?
