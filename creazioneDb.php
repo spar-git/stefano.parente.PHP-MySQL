@@ -40,9 +40,9 @@ $sqlQuery = "CREATE TABLE if not exists $STuser_table_name (";
 $sqlQuery.= "userId int NOT NULL auto_increment, primary key (userId), ";
 $sqlQuery.= "userName varchar (50) NOT NULL, ";
 $sqlQuery.= "password varchar (32) NOT NULL, ";
-$sqlQuery.= "tipologia smallint";                        //se 1 utente, se 2 gestore, se 3 admin
-$sqlQuery.= "sommeSpese float";                          //ricorda la somma di tutte le spese dell'utente
-$sqlQuery.= "puntiFedeltà float";                        //acquisisce punti in base alle spese (possono essere azzerati se utilizzati per lo sconto)
+$sqlQuery.= "tipologia smallint,";                        //se 1 utente, se 2 gestore, se 3 admin
+$sqlQuery.= "sommeSpese float,";                          //ricorda la somma di tutte le spese dell'utente
+$sqlQuery.= "puntiFedeltà float,";                        //acquisisce punti in base alle spese (possono essere azzerati se utilizzati per lo sconto)
 $sqlQuery.= "stato boolean";                             //se 1 attivo, se 0 bannato
 $sqlQuery.= ");";                                 
 
@@ -59,9 +59,9 @@ else {
 $sqlQuery = "CREATE TABLE if not exists $STmovie_table_name (";
 $sqlQuery.= "movieId int NOT NULL auto_increment, primary key (movieId), ";
 $sqlQuery.= "title varchar (50) NOT NULL, ";
-$sqlQuery.= "costoMovie float";
-$sqlQuery.= "genere varchar (20) NOT NULL,";    //genere del film
-$sqlQuery.= "Movie bigint ";                  //numero di voti del film (utile anche per calcolare le stelle)
+$sqlQuery.= "costoMovie float, ";
+$sqlQuery.= "genere varchar (20) NOT NULL, ";    //genere del film
+$sqlQuery.= "numVotiMovie bigint, ";                  //numero di voti del film (utile anche per calcolare le stelle)
 $sqlQuery.= "stelle smallint";                  //valutazione utenti complessiva del film  
 $sqlQuery.= ");";
 
@@ -76,11 +76,11 @@ else {
 
 //CREA TABELLA MUSICA 
 $sqlQuery = "CREATE TABLE if not exists $STmusic_table_name (";
-$sqlQuery.= "musicId int NOT NULL auto_increment, primary key (musictId), ";
+$sqlQuery.= "musicId int NOT NULL auto_increment, primary key (musicId), ";
 $sqlQuery.= "title varchar (50) NOT NULL, ";
-$sqlQuery.= "costoMusic float ";
+$sqlQuery.= "costoMusic float, ";
 $sqlQuery.= "autore varchar (50) NOT NULL, ";             //nome dell'autore del brano
-$sqlQuery.= "numvoti bigint ";                      ////numero di recensioni del brano (utile anche per calcolare le stelle) 
+$sqlQuery.= "numVotiMusic bigint,  ";                          ///numero di voti del brano (utile anche per calcolare le stelle) 
 $sqlQuery.= "stelle smallint";                            //valutazione utenti complessiva del brano 
 $sqlQuery.= ");";
 
@@ -97,15 +97,14 @@ else {
 $sqlQuery = "CREATE TABLE if not exists $STrecensioni_table_name (";
 $sqlQuery.= "recensioniId int NOT NULL auto_increment, primary key (recensioniId), ";
 $sqlQuery.= "title varchar (20), ";              //titolo recensione max 20 char per migliorare la leggibilità
-$sqlQuery.= "descrizione varchar (250) ";        //descrizione della recensione limitata a 250 char affinchè non diventi troppo prolissa
-$sqlQuery.= "stelle smallint (20), ";            //valutazione utenti complessiva del sito
-
+$sqlQuery.= "descrizione varchar (250), ";        //descrizione della recensione limitata a 250 char affinchè non diventi troppo prolissa
+$sqlQuery.= "stelle smallint (20) ";            //valutazione utenti complessiva del sito
 $sqlQuery.= ");";
 
 echo "<P>$sqlQuery</P>";
 
 if ($resultQ = mysqli_query($mysqliConnection, $sqlQuery))
-    printf("Tabella musica creata!!!\n");
+    printf("Tabella recensioni creata!!!\n");
 else {
     printf("Errore creazione Tabella recensioni!\n");
   exit();
@@ -117,9 +116,22 @@ echo mysqli_errno($mysqliConnection);
 
 // popolamento tabella utenti
 $sql = "INSERT INTO $STuser_table_name
-	(username, password, tipologia, sommeSpese, puntiFedeltà, stato)
+	(userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
 	VALUES
-	(\"stefano\", \"pass123\", \"0\")
+	(\"stefano\", \"pass123\", \"3\", \"0\", \"0\", \"1\")
+	";
+
+if ($resultQ = mysqli_query($mysqliConnection, $sql))
+    printf("Polamento user eseguito!!!\n");
+else {
+    printf("Impossibile popolare tabella STuser.\n");
+    exit();
+}
+
+$sql = "INSERT INTO $STuser_table_name
+	(userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
+	VALUES
+	(\"paolo\", \"pass456\", \"1\", \"0\", \"0\", \"1\")
 	";
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
@@ -130,22 +142,9 @@ else {
 }
 
 $sql = "INSERT INTO $STuser_table_name
-	(username, password, sommeSpese)
+	(userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
 	VALUES
-	(\"paolo\", \"pass456\", \"0\")
-	";
-
-if ($resultQ = mysqli_query($mysqliConnection, $sql))
-    printf("Polamento user eseguito!!!\n");
-else {
-    printf("Impossibile popolare tabella STuser.\n");
-  exit();
-}
-
-$sql = "INSERT INTO $STuser_table_name
-	(username, password, sommeSpese)
-	VALUES
-	(\"sara\", \"pass789\", \"0\")
+	(\"sara\", \"pass789\", \"2\", \"0\", \"0\", \"1\")
 	";
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
@@ -161,7 +160,6 @@ $sql = "INSERT INTO $STmovie_table_name
 	VALUES
 	(\"Il buono, il brutto, il cattivo\", \"20\", \"Western\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento movie eseguito!!!\n");
@@ -175,7 +173,6 @@ $sql = "INSERT INTO $STmovie_table_name
 	VALUES
 	(\"Metropolis\", \"18\", \"Fantascienza\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento movie eseguito!!!\n");
@@ -189,7 +186,6 @@ $sql = "INSERT INTO $STmovie_table_name
 	VALUES
 	(\"Il padrino\", \"20\", \"Drammatico\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento movie eseguito!!!\n");
@@ -203,7 +199,6 @@ $sql = "INSERT INTO $STmovie_table_name
 	VALUES
 	(\"C'era una volta il west\", \"22\", \"Western\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento movie eseguito!!!\n");
@@ -217,7 +212,6 @@ $sql = "INSERT INTO $STmovie_table_name
 	VALUES
 	(\"Eva contro Eva\", \"25\", \"Drammatico\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento movie eseguito!!!\n");
@@ -231,7 +225,6 @@ $sql = "INSERT INTO $STmovie_table_name
 	VALUES
 	(\"2001: Odissea nello spazio\", \"28\", \"Fantascienza\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento movie eseguito!!!\n");
@@ -246,7 +239,6 @@ $sql = "INSERT INTO $STmusic_table_name
 	VALUES
 	(\"Gli anni\", \"4\", \"Max Pezzali\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento music eseguito!!!\n");
@@ -255,12 +247,11 @@ else {
   exit();
 }
 
-$sql = "INSERT INTO $STmovie_table_name
+$sql = "INSERT INTO $STmusic_table_name
 	(title, costoMusic, autore, numVotiMusic, stelle)
 	VALUES
 	(\"Amor mio\", \"2\", \"Mina\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento music eseguito!!!\n");
@@ -269,12 +260,11 @@ else {
   exit();
 }
 
-$sql = "INSERT INTO $STmovie_table_name
+$sql = "INSERT INTO $STmusic_table_name
 	(title, costoMusic, autore, numVotiMusic, stelle)
 	VALUES
 	(\"L'ombelico del mondo\", \"7\", \"Jovanotti\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento music eseguito!!!\n");
@@ -283,12 +273,11 @@ else {
   exit();
 }
 
-$sql = "INSERT INTO $STmovie_table_name
+$sql = "INSERT INTO $STmusic_table_name
 	(title, costoMusic, autore, numVotiMusic, stelle)
 	VALUES
 	(\"La storia siamo noi\", \"4\", \"Francesco De Gregori\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento music eseguito!!!\n");
@@ -297,12 +286,11 @@ else {
   exit();
 }
 
-$sql = "INSERT INTO $STmovie_table_name
+$sql = "INSERT INTO $STmusic_table_name
 	(title, costoMusic, autore, numVotiMusic, stelle)
 	VALUES
 	(\"Sally\", \"6\", \"Vasco Rossi\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento music eseguito!!!\n");
@@ -311,12 +299,11 @@ else {
   exit();
 }
 
-$sql = "INSERT INTO $STmovie_table_name
+$sql = "INSERT INTO $STmusic_table_name
 	(title, costoMusic, autore, numVotiMusic, stelle)
 	VALUES
 	(\"Mentre tutto scorre\", \"3\", \"Negramaro\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento music eseguito!!!\n");
@@ -325,12 +312,11 @@ else {
   exit();
 }
 
-$sql = "INSERT INTO $STmovie_table_name
+$sql = "INSERT INTO $STmusic_table_name
 	(title, costoMusic, autore, numVotiMusic, stelle)
 	VALUES
 	(\"America\", \"5\", \"Gianna Nannini\", \"0\", \"0\")
 	";
-echo $sql;
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
     printf("Polamento music eseguito!!!\n");
