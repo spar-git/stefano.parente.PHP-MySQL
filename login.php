@@ -26,10 +26,13 @@ if (isset($_POST['invio']))                                         //è stato d
       $_SESSION['puntiFedeltà']=$row['puntiFedeltà'];
       $_SESSION['accessoPermesso']=1000;
 
-      if ($row['stato']==1) {                 //se TRUE l'utente è attivo e può accedere al sito, se FALSE vedere a fine pagina
-        header('Location: paginaIniziale.php');    
+      if ($row['stato']==1) {                 //se TRUE l'utente è attivo e può accedere al sito
+        header('Location: homePage.php');    
         exit();
-      } 
+      }
+      else {                 //altrimenti l'utente è bannato e non può accedere al sito
+        echo "<h1 style=\"color:red; background-color: black; padding: 4ex;\"> !!! Sei stato bannato dal sito dall&lsquoadmin. Pertanto non potrai pi&uacute accederne al contenuto !!!</h1>";
+      }
     }
     else
     echo "<p>I dati inseriti non sono corretti, ritenta.</p>";           //caso in cui i dati inseriti non sono corretti 
@@ -57,10 +60,7 @@ if (isset($_POST['invio']))                                         //è stato d
   <input type="submit" name="invio" value="accedi">
   <input type="reset" name="reset" value="reset">
 </h4>
-<? php
-    if ($row['stato']==0)                                //altrimenti l'utente è bannato e non può accedere al sito
-      <h1 style="color:red; background-color: black; padding: 4ex;"> !!! Sei stato bannato dal sito dall&lsquoadmin. Pertanto non potrai pi&uacute accederne al contenuto !!!</h1>
-?>
+
 </form>
 
 </body>
