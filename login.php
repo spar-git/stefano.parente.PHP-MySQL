@@ -44,22 +44,26 @@ if (isset($_POST['invio']))                                         //è stato d
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+  <link rel="stylesheet" type="text/css" href="mieistili.css">
   <title>pagina di login</title>
 </head>
 
 <body>
-<h1 style="color:red; text-align: center; border: solid;" > Benvenuto su MediaShop Online!</h1>
+<php? require_once("./menù.html"); ?>
 <hr />
 <h3 style="text-align:center; margin-top: 20px;  font-family: Arial, sans-serif;">Accedi inserendo nome utente e password<h3>
 
-<form action="<?php $_SERVER['PHP_SELF']?>" method="post">
-<h4>
-  username: <input style="padding: 2ex;" type="text" name="userName" size="25" />
-  password: <input style="padding: 2ex;" type="text" name="password" size="25" />
-
-  <input type="submit" name="invio" value="accedi">
-  <input type="reset" name="reset" value="reset">
-</h4>
+<div style="text-align: center;">
+  <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
+  <p>
+    Username: <br>
+    <input style="padding: 2ex;" type="text" name="userName" size="25" /> <br>
+    Password: <br>
+    <input style="padding: 2ex;" type="text" name="password" size="25" /> <br>
+  </p>
+  <input class="button" type="submit" name="invio" value="Accedi">
+  <input class="button" type="reset" name="reset" value="Reset">
+</div>
 
 </form>
 
