@@ -1,0 +1,30 @@
+.logo {
+    font-family: 'Arial', sans-serif;
+    font-size: 32px;
+    font-weight: bold; /* Rendi il testo più spesso */
+    color: #FF0000;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 2px #000;
+    text-align: center;
+  }
+  
+  .logo span {
+    font-size: 42px;
+  }
+  
+body {
+    background-color: #f0f8ff; /* Azzurro molto chiaro */
+  }
+
+/* Stile per i pulsanti */
+.button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
