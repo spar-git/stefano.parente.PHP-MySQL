@@ -49,7 +49,7 @@ if (isset($_POST['invio']))                                         //è stato d
 </head>
 
 <body>
-<php? require_once("./menù.html"); ?>
+<?php require_once("./menù.html"); ?>
 <hr />
 <h3 style="text-align:center; margin-top: 20px;  font-family: Arial, sans-serif;">Accedi inserendo nome utente e password<h3>
 
