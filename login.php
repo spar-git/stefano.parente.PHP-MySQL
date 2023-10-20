@@ -51,7 +51,7 @@ if (isset($_POST['invio']))                                         //è stato d
 <body>
 <?php require_once("./menù.html"); ?>
 <hr />
-<h3 style="text-align:center; margin-top: 20px;  font-family: Arial, sans-serif;">Accedi inserendo nome utente e password<h3>
+<h3 style="text-align:center; margin-top: 250px;  font-family: Helvetica, sans-serif; font-weight: 100;">Accedi inserendo nome utente e password<h3>
 
 <div style="text-align: center;">
   <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
@@ -62,7 +62,7 @@ if (isset($_POST['invio']))                                         //è stato d
     <input style="padding: 2ex;" type="text" name="password" size="25" /> <br>
   </p>
   <input class="button" type="submit" name="invio" value="Accedi">
-  <input class="button" type="reset" name="reset" value="Reset">
+  <input class="button" type="submit" name="registrati" value="Registrati">
 </div>
 
 </form>
