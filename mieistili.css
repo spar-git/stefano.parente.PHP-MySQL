@@ -1,4 +1,3 @@
-
 /* ---------stili per menù d'intestazione--------------*/
 .menu-container {
   background-color: #0e0f16;
@@ -63,8 +62,12 @@
 }
 
 /* --------- stili per la home page ---------*/
-section {
-  max-width: 800px; 
+body{
+  font-family: 'Open Sans', Arial, sans-serif;
+  line-height: 1.6;
+}
+div:not([class]) {
+  max-width: 900px; 
   margin: 0 auto; 
   text-align: justify; 
   padding: 20px;
