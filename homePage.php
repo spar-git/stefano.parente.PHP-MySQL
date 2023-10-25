@@ -7,7 +7,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	<title>Home Page di MediaShop Online</title>
 </head>
 
-<body style="font-family: Arial, sans-serif;">
+<body>
 <?php require_once("./menù.html");?>
 <hr />
 <h1 style="text-align: center; font-size: 36px; margin-top: 200px;">Benvenuti nel nostro negozio online di Musica e Film!</h1>
@@ -27,11 +27,11 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         	<li>Supporto Clienti: Il nostro team di supporto è disponibile per rispondere alle tue domande e assisterti in ogni fase dell'acquisto.</li>
     	</ul>
 </div>
-<div style="clear: both;"></div>
 
 <div>
     	
-    <p>Inizia a esplorare ora e porta a casa la musica e i film che ami. Grazie per aver scelto il nostro negozio online e buon shopping!</p>
+    <p style="font-size: 20px; font-family: 'Cursive', cursive; text-align: center">Inizia a esplorare ora e porta a casa la musica e i film che ami.</br>Grazie per aver scelto il nostro negozio online e buon shopping!</p>
 </div>
+
 </body>
 </html>
