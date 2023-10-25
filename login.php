@@ -52,7 +52,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
 <?php require_once("./menù.html"); ?>
 <hr />
-<h3 style="text-align:center; margin-top: 250px;  font-family: Helvetica, sans-serif; font-weight: 100;">Accedi inserendo nome utente e password<h3>
+<p style="text-align:center; margin-top: 200px; font-family: Helvetica, sans-serif;">Accedi inserendo nome utente e password<p>
 
 <div style="text-align: center;">
   <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
