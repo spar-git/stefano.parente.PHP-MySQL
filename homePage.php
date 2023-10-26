@@ -10,7 +10,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
 <?php require_once("./menù.html");?>
 <hr />
-<h1 style="text-align: center; font-size: 36px; margin-top: 200px;">Benvenuti nel nostro negozio online di Musica e Film!</h1>
+<h1 style="text-align: center; font-size: 36px;">Benvenuti nel nostro negozio online di Musica e Film!</h1>
 <img style="display: block; margin: 0 auto;" src="homeimg.jpg" alt="Immagine benvenuto">
 <div>
     <p>Esplora il nostro vasto catalogo di musica e film di alta qualità, pronto per essere scaricato e goduto nella comodità della tua casa. Siamo appassionati di cultura musicale e cinematografica e offriamo una vasta gamma di opzioni per soddisfare i tuoi gusti e preferenze. Se sei un amante della musica, troverai brani di tutti i generi, dagli ultimi successi alle perle nascoste. Se sei un cinefilo, abbiamo film per ogni genere e epoca.</p>
