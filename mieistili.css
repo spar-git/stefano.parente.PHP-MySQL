@@ -66,16 +66,56 @@ body{
   line-height: 1.6;
 }
 
-div:not([class]) {
-  max-width: 900px; 
-  margin: 0 auto; 
-  text-align: justify; 
-  padding: 20px;
-}
-
 .path {
   font-family: Arial, sans-serif;
   color: rgb(105, 102, 102);
   font-size: 15px;
   margin-top: 20px;
+}
+.path a {
+  text-decoration: none;
+  color:  rgb(105, 102, 102);
+}
+
+.path a:visited {
+  color:  rgb(105, 102, 102);
+}
+
+div:not([class]) {
+  max-width: 900px; 
+  margin: 0 auto; 
+  text-align: justify; 
+}
+
+/*--------- prodotti ----------*/
+
+.box-prodotti {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.prodotti {
+  width: 25%; 
+  padding: 20px;
+  border: 1px solid #ddd; 
+  margin: 5px; 
+  text-align: center;
+}
+
+/*----------- negozio -----------------*/
+.dove-siamo-box {
+  background-color: #e2e2e2;
+  padding: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid #d05aff;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.box-assistenza {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
