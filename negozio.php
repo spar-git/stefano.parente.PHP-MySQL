@@ -38,10 +38,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     	</div>
 
 <div class="dove-siamo-box">
-    <a href="https://maps.app.goo.gl/ziUegZv8x3ngFcxN7"><img style="width: 200px; float: left; margin-right:40px; margin-bottom:10px;" src="mappa.png" alt="Dove siamo"></a>
+    <a href="https://maps.app.goo.gl/ziUegZv8x3ngFcxN7"><img style="width: 220px; float: left; margin-right:20px; margin-bottom:10px;" src="mappa.png" alt="Dove siamo"></a>
     <div style="text-align: justify;">
         <h2 >Dove Siamo</h2>
-        <p>La sede di Media Shop Online si trova in Via A. Doria, 23, a Latina. Per raggiungerci, segui le seguenti indicazioni:</p>
+        <p>La sede di Media Shop Online si trova in Via A. Doria, 23, a Latina. Per raggiungerci, segui le seguenti indicazioni:<br><br></p>
         <ol>
             <li>Dalla stazione ferroviaria di Latina, svoltare a sinistra e camminare per 200 metri.</li>
             <li>Presso l'incrocio di Via A. Doria, svoltare a destra.</li>
@@ -50,3 +50,26 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         <p>Non esitare a contattarci se hai bisogno di ulteriori informazioni o indicazioni.</p>
     </div>
 </div>
+
+<div class="recensioni-box">
+    <h2 >Cosa dicono di noi</h2>
+    <div class="recensione">
+        <p>Nome: 1111<br>
+        Valutazione:<br>
+        Data e ora:<br>
+        </p>
+        <p><strong>Titolo:<br></strong></p>
+        <p>Testo recensione...<br></p>
+    </div>
+    <div class="recensione">
+        <p>Nome: 1111<br>
+        Valutazione:<br>
+        Data e ora:<br>
+        </p>
+        <p><strong>Titolo:<br></strong></p>
+        <p>Testo recensione...<br></p>
+    </div>
+</div>
+
+        
+
