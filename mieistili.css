@@ -106,16 +106,10 @@ div:not([class]) {
 /*----------- negozio -----------------*/
 .dove-siamo-box {
   background-color: #e2e2e2;
-  padding: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 40px;
   border: 1px solid #d05aff;
   border-radius: 5px;
-  margin: 20px;
-}
-
-.box-assistenza {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  margin-right: 150px;
+  margin-left: 150px;
+ 
 }
