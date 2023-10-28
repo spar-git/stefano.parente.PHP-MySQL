@@ -36,11 +36,11 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		<div>
 
     	</div>
-</div>
 
-<div>
-    <div class="dove-siamo-box">
-        <h2>Dove Siamo</h2>
+<div class="dove-siamo-box">
+    <a href="https://maps.app.goo.gl/ziUegZv8x3ngFcxN7"><img style="width: 200px; float: left; margin-right:40px; margin-bottom:10px;" src="mappa.png" alt="Dove siamo"></a>
+    <div style="text-align: justify;">
+        <h2 >Dove Siamo</h2>
         <p>La sede di Media Shop Online si trova in Via A. Doria, 23, a Latina. Per raggiungerci, segui le seguenti indicazioni:</p>
         <ol>
             <li>Dalla stazione ferroviaria di Latina, svoltare a sinistra e camminare per 200 metri.</li>
