@@ -1,8 +1,16 @@
+body, html {
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
 /* ---------stili per il menù--------------*/
 .menu-container {
   background-color: #0e0f16;
   position: fixed; 
   width: 100%;
+  margin:0;
+  padding:0;
 }
 
 .menu {
@@ -12,6 +20,7 @@
 
 .logo img {
   width: 200px;
+  margin-left: 20px;
 }
 
 .menu-list {
@@ -19,12 +28,12 @@
   font-size: 20px;
   list-style: none;
   display: flex;
-  margin-left: 50px;
+  margin-left: 40px;
   margin-top: 100px;
 }
 
 .menu-list li {
-  margin-right: 20px;
+  margin-right: 25px;
 }
 
 .menu-list li:last-child {
@@ -32,6 +41,11 @@
 }
 
 .menu-list a {
+  text-decoration: none;
+  color: rgb(219, 219, 219);
+}
+
+.menu-list a:hover {
   text-decoration: none;
   color: white;
 }
@@ -46,19 +60,18 @@
 .login,
 .cart {
   margin-right: 20px;
-  color: white;
+  color: rgb(219, 219, 219);
   padding: 5px;
-  border: 1px solid white;
+  border: 1px solid rgb(219, 219, 219);
+  text-decoration: none;
 }
 
 .login:hover,
 .cart:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  color:white;
 }
 
-.content {
-  margin-top: 80px;
-}
 
 /* --------- stili generali ---------*/
 body{
@@ -77,12 +90,12 @@ body{
   color:  rgb(105, 102, 102);
 }
 
-.path a:visited {
-  color:  rgb(105, 102, 102);
+.path a:hover {
+  color:  rgb(0, 0, 0);
 }
 
 div:not([class]) {
-  max-width: 900px; 
+  max-width: 1000px; 
   margin: 0 auto; 
   text-align: justify; 
 }
@@ -111,5 +124,17 @@ div:not([class]) {
   border-radius: 5px;
   margin-right: 150px;
   margin-left: 150px;
- 
+}
+
+.recensioni-box {
+  padding: 20px;
+  margin-top: 20px;
+  text-align: justify;
+}
+
+.recensione {
+  padding: 10px;
+  border: 1px solid #d05aff;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
