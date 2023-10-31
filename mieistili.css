@@ -112,7 +112,7 @@ div:not([class]) {
   width: 25%; 
   padding: 20px;
   border: 1px solid #ddd; 
-  margin: 5px; 
+  margin: 20px; 
   text-align: center;
 }
 
