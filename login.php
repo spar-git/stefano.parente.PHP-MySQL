@@ -1,17 +1,22 @@
 <?php
 require_once("./connessione.php");
 
-if (isset($_POST['invio']))                                         //è stato dato l'invio?...    
-  if (empty($_POST['userName']) || empty($_POST['password']))       //...sono stati inseriti username e password?
-    echo "<p>dati mancanti!</p>";
+$mysqliConnection = new mysqli("localhost", "archer", "archer", $db_name);
+
+$messaggio="";
+
+if (isset($_POST['invio']))                                        //è stato dato l'invio?    
+  if (empty($_POST['userName']) || empty($_POST['password'])){      //...sono stati inseriti username e password?
+    $messaggio = "Devi inserire entrambi i campi per poter accedere.";     //se no, manda messaggio errore                                  
+  }                                                           
   else {                                                            //se si, allora cerchiamo l'utente nel DB
     $sql = "SELECT *                                                
             FROM $STuser_table_name             
             WHERE userName = \"{$_POST['userName']}\" AND password =\"{$_POST['password']}\"
 		    ";
+
     if (!$resultQ = mysqli_query($mysqliConnection, $sql)) {
-        printf("La query non ha risultato!\n");
-    exit();
+      printf("La query non ha risultato!\n");
     }
 
     $row = mysqli_fetch_array($resultQ);        //salviamo la riga della tabella in questa variabile
@@ -19,23 +24,24 @@ if (isset($_POST['invio']))                                         //è stato d
     if ($row) {                                 //se la riga selezionata esiste attiviamo la sessione per ricordare i dati dell'utente (lato server + il cookie di sessione lato client)
       session_start();
       $_SESSION['userName']=$_POST['userName'];
-      $_SESSION['dataLogin']=time();
       $_SESSION['userId']=$row['userId'];
       $_SESSION['tipologia']=$row['tipologia'];     //ce la portiamo nella pagina iniziale per capire i privilegi dell'utente (se 1 utente, se 2 gestore, se 3 admin)
       $_SESSION['sommeSpese']=$row['sommeSpese'];
       $_SESSION['puntiFedeltà']=$row['puntiFedeltà'];
+      // $_SESSION['stato']=$row['stato'];          //non ci serve dopo, ma solo qui nel login per controllare l'utente
+      $_SESSION['dataLogin']=time();
       $_SESSION['accessoPermesso']=1000;
 
-      if ($row['stato']==1) {                 //se TRUE l'utente è attivo e può accedere al sito
+      if ($row['stato']==1) {                 //se TRUE l'utente è attivo e può accedere al sito...
         header('Location: homePage.php');    
         exit();
       }
-      else {                 //altrimenti l'utente è bannato e non può accedere al sito
-        echo "<h1 style=\"color:red; background-color: black; padding: 4ex;\"> !!! Sei stato bannato dal sito dall&lsquoadmin. Pertanto non potrai pi&uacute accederne al contenuto !!!</h1>";
+      else {                                //...altrimenti l'utente è bannato e non può accedere al sito
+        $messaggio ="!!! Sei stato bannato dal sito dall'admin. Pertanto non potrai pi&uacute accedere ai vantaggi!!!";
       }
     }
     else
-    echo "<p>I dati inseriti non sono corretti, ritenta.</p>";           //caso in cui i dati inseriti non sono corretti 
+      $messaggio = "I dati inseriti non sono corretti, ritenta o registrati.";           //caso in cui i dati inseriti non sono corretti 
   }
 ?>
 
@@ -52,9 +58,12 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
 <?php require_once("./menù.html"); ?>
 <hr />
-<p style="text-align:center; margin-top: 200px; font-family: Helvetica, sans-serif;">Accedi inserendo nome utente e password<p>
+<p style="text-align:center;color: red; font-family: Helvetica, sans-serif;">Unisciti a noi per iniziare a guadagnare punti fedeltà e sbloccare 
+fantastici sconti!<br>La registrazione è semplice, non perdere l'opportunità di 
+risparmiare sui tuoi acquisti preferiti!</p>
 
-<div style="text-align: center;">
+<div style="text-align: center;background-color: #e2e2e2;padding: 40px; border: 1px solid #d05aff; 
+            border-radius: 5px;  margin-right: 350px;  margin-left: 350px;">
   <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
   <p>
     Username: <br>
@@ -65,8 +74,11 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   <input class="button" type="submit" name="invio" value="Accedi">
   <input class="button" type="submit" name="registrati" value="Registrati">
 </div>
-
 </form>
+
+<p style="text-align: center; margin-top: 20px; color:red; text-decoration: underline;font-style: italic;">
+<strong> <?php echo $messaggio; ?> </strong>
+</p>
 
 </body>
 </html>
