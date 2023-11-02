@@ -4,7 +4,11 @@ require_once("./connessione.php");
 $mysqliConnection = new mysqli("localhost", "archer", "archer", $db_name);
 
 $messaggio="";
+$submit= "<input class="button" type="submit" name="invio" value="Accedi">
+<input class="button" type="submit" name="registrati" value="Registrati">";
+$inputpass = "";
 
+// ACCESSO
 if (isset($_POST['invio']))                                        //è stato dato l'invio?    
   if (empty($_POST['userName']) || empty($_POST['password'])){      //...sono stati inseriti username e password?
     $messaggio = "Devi inserire entrambi i campi per poter accedere.";     //se no, manda messaggio errore                                  
@@ -43,6 +47,49 @@ if (isset($_POST['invio']))                                        //è stato da
     else
       $messaggio = "I dati inseriti non sono corretti, ritenta o registrati.";           //caso in cui i dati inseriti non sono corretti 
   }
+
+  // REGISTRAZIONE
+  if (isset($_POST['registrati'])) {
+    $inputpass = "Conferma Password: <br><input style="padding: 2ex;" type="text" name="password2" size="25" /> <br>";
+    $submit= "<input class="button" type="submit" name="registrati2" value="Registrati">";
+      if (isset($_POST['password2']))
+        if (($_POST['password'])==($_POST['password2'])) {
+          $sql = "INSERT INTO $STuser_table_name
+	        (userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
+	        VALUES (\"$_POST['userName']\", \"$_POST['password']\", \"1\", \"0\", \"0\", \"1\")
+	      ";    
+    
+    
+
+
+
+    $sql = "SELECT *                                                
+            FROM $STuser_table_name             
+            WHERE userName = \"{$_POST['userName']}\" AND password =\"{$_POST['password']}\"
+		    ";
+
+    if (!$resultQ = mysqli_query($mysqliConnection, $sql)) {
+      printf("La query non ha risultato!\n");
+    }
+
+    $row = mysqli_fetch_array($resultQ);        //salviamo la riga della tabella in questa variabile
+
+    if ($row[userName]) {                  //se esiste già un nome utente uguale
+      $messaggio= "Questo nome utente risulta già registrato!";
+    }
+    else
+      $inputpass = "Conferma Password: <br><input style="padding: 2ex;" type="text" name="password2" size="25" /> <br>"
+      if (isset($_POST['password2']))
+        if (($_POST['password'])==($_POST['password2'])) {
+          $sql = "INSERT INTO $STuser_table_name
+	        (userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
+	        VALUES (\"$_POST['userName']\", \"$_POST['password']\", \"1\", \"0\", \"0\", \"1\")
+	      ";
+        }
+
+
+  }
+?>
 ?>
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -70,9 +117,9 @@ risparmiare sui tuoi acquisti preferiti!</p>
     <input style="padding: 2ex;" type="text" name="userName" size="25" /> <br>
     Password: <br>
     <input style="padding: 2ex;" type="text" name="password" size="25" /> <br>
+    <?php echo $inputpass ?>
   </p>
-  <input class="button" type="submit" name="invio" value="Accedi">
-  <input class="button" type="submit" name="registrati" value="Registrati">
+  <?php echo $submit ?>
 </div>
 </form>
 
