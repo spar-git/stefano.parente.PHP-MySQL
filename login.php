@@ -4,12 +4,12 @@ require_once("./connessione.php");
 $mysqliConnection = new mysqli("localhost", "archer", "archer", $db_name);
 
 $messaggio="";
-$submit= "<input class="button" type="submit" name="invio" value="Accedi">
-<input class="button" type="submit" name="registrati" value="Registrati">";
+$submit= "<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Accedi\">
+          <input class=\"button\" type=\"submit\" name=\"registrati\" value=\"Registrati\">";
 $inputpass = "";
 
 // ACCESSO
-if (isset($_POST['invio']))                                        //è stato dato l'invio?    
+if (isset($_POST['invio'])) {                                        //è stato dato l'invio?    
   if (empty($_POST['userName']) || empty($_POST['password'])){      //...sono stati inseriti username e password?
     $messaggio = "Devi inserire entrambi i campi per poter accedere.";     //se no, manda messaggio errore                                  
   }                                                           
@@ -47,22 +47,62 @@ if (isset($_POST['invio']))                                        //è stato da
     else
       $messaggio = "I dati inseriti non sono corretti, ritenta o registrati.";           //caso in cui i dati inseriti non sono corretti 
   }
+}
 
-  // REGISTRAZIONE
-  if (isset($_POST['registrati'])) {
-    $inputpass = "Conferma Password: <br><input style="padding: 2ex;" type="text" name="password2" size="25" /> <br>";
-    $submit= "<input class="button" type="submit" name="registrati2" value="Registrati">";
-      if (isset($_POST['password2']))
-        if (($_POST['password'])==($_POST['password2'])) {
-          $sql = "INSERT INTO $STuser_table_name
-	        (userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
-	        VALUES (\"$_POST['userName']\", \"$_POST['password']\", \"1\", \"0\", \"0\", \"1\")
-	      ";    
+// REGISTRAZIONE
+if (isset($_POST['registrati'])||isset($_POST['registrati2'])) {
+  $inputpass = "Conferma Password: <br><input style=\"padding: 2ex;\" type=\"text\" name=\"password2\" size=\"25\" /> <br>";
+  $submit= "<input class=\"button\" type=\"submit\" name=\"registrati2\" value=\"Registrati\">";
+
+  if (isset($_POST['registrati2'])){
+    if (!empty($_POST['password'])&&!empty($_POST['password2'])&&!empty($_POST['userName'])){
+      $sql = "SELECT *                                                
+            FROM $STuser_table_name             
+            WHERE userName = \"{$_POST['userName']}\" AND password =\"{$_POST['password']}\"
+		    ";
+
+    if (!$resultQ = mysqli_query($mysqliConnection, $sql)) {
+      printf("La query non ha risultato!\n");
+    }
+
+    $row = mysqli_fetch_array($resultQ);        //salviamo la riga della tabella in questa variabile
+
+    if ($row[userName]) {                  //se esiste già un nome utente uguale
+      $messaggio= "Questo nome utente risulta già registrato!";
+    }
+    else {
+      if (($_POST['password'])==($_POST['password2'])) {
+        $sql = "INSERT INTO $STuser_table_name
+	              (userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
+	              VALUES ('{$_POST['userName']}', '{$_POST['password']}', '1', '0', '0', '1')
+	              ";
+        if ($resultQ = mysqli_query($mysqliConnection, $sql))
+          printf("Polamento user eseguito!!!\n");
+        else {
+          printf("Impossibile popolare tabella STuser.\n");
+          exit();
+        }
+        $submit="<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Accedi\">
+                <input class=\"button\" type=\"submit\" name=\"registrati\" value=\"Registrati\">";
+        $inputpass = "";
+        $messaggio="Ti sei registrato correttamente! accedi per verificare";
+      }
+      else
+        $messaggio = "Le due password non corrispondono.";
+    }      
+  }
+  else 
+      $messaggio = "Alcuni campi risultano mancanti.";
+  }
+}
+
+
+        
     
     
 
 
-
+/*
     $sql = "SELECT *                                                
             FROM $STuser_table_name             
             WHERE userName = \"{$_POST['userName']}\" AND password =\"{$_POST['password']}\"
@@ -89,7 +129,7 @@ if (isset($_POST['invio']))                                        //è stato da
 
 
   }
-?>
+?>*/
 ?>
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -109,7 +149,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 fantastici sconti!<br>La registrazione è semplice, non perdere l'opportunità di 
 risparmiare sui tuoi acquisti preferiti!</p>
 
-<div style="text-align: center;background-color: #e2e2e2;padding: 40px; border: 1px solid #d05aff; 
+<div style="text-align: center;background-color: #e2e2e2;padding: 5px; border: 1px solid #d05aff; 
             border-radius: 5px;  margin-right: 350px;  margin-left: 350px;">
   <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
   <p>
