@@ -95,41 +95,6 @@ if (isset($_POST['registrati'])||isset($_POST['registrati2'])) {
       $messaggio = "Alcuni campi risultano mancanti.";
   }
 }
-
-
-        
-    
-    
-
-
-/*
-    $sql = "SELECT *                                                
-            FROM $STuser_table_name             
-            WHERE userName = \"{$_POST['userName']}\" AND password =\"{$_POST['password']}\"
-		    ";
-
-    if (!$resultQ = mysqli_query($mysqliConnection, $sql)) {
-      printf("La query non ha risultato!\n");
-    }
-
-    $row = mysqli_fetch_array($resultQ);        //salviamo la riga della tabella in questa variabile
-
-    if ($row[userName]) {                  //se esiste già un nome utente uguale
-      $messaggio= "Questo nome utente risulta già registrato!";
-    }
-    else
-      $inputpass = "Conferma Password: <br><input style="padding: 2ex;" type="text" name="password2" size="25" /> <br>"
-      if (isset($_POST['password2']))
-        if (($_POST['password'])==($_POST['password2'])) {
-          $sql = "INSERT INTO $STuser_table_name
-	        (userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
-	        VALUES (\"$_POST['userName']\", \"$_POST['password']\", \"1\", \"0\", \"0\", \"1\")
-	      ";
-        }
-
-
-  }
-?>*/
 ?>
 
 <?xml version="1.0" encoding="UTF-8"?>
