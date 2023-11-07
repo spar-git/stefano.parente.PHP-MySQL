@@ -28,7 +28,7 @@ else {
 $mysqliConnection->close();
 
 // e la riapriamo con il collegamento alla base di dati
-$mysqliConnection = new mysqli("localhost", "archer", "archer", $db_name);
+$mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 
 // controllo della connessione (versione "procedurale")
 if (mysqli_errno($mysqliConnection)) {
@@ -36,6 +36,7 @@ if (mysqli_errno($mysqliConnection)) {
     exit();
 }
 
+// CREA TABELLA UTENTI
 $sqlQuery = "CREATE TABLE if not exists $STuser_table_name (";                
 $sqlQuery.= "userId int NOT NULL auto_increment, primary key (userId), ";
 $sqlQuery.= "userName varchar (50) NOT NULL, ";
@@ -96,9 +97,11 @@ else {
 //CREA TABELLA RECENSIONI DEL SITO
 $sqlQuery = "CREATE TABLE if not exists $STrecensioni_table_name (";
 $sqlQuery.= "recensioniId int NOT NULL auto_increment, primary key (recensioniId), ";
+$sqlQuery .="userId int NOT NULL, ";
 $sqlQuery.= "title varchar (20), ";              //titolo recensione max 20 char per migliorare la leggibilità
 $sqlQuery.= "descrizione varchar (250), ";        //descrizione della recensione limitata a 250 char affinchè non diventi troppo prolissa
 $sqlQuery.= "stelle smallint (20) ";            //valutazione utenti complessiva del sito
+$sqlQuery .= "FOREIGN KEY (userId) REFERENCES $STuser_table_name(userId)";
 $sqlQuery.= ");";
 
 echo "<P>$sqlQuery</P>";
