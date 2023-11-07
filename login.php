@@ -1,7 +1,7 @@
 <?php
 require_once("./connessione.php");
 
-$mysqliConnection = new mysqli("localhost", "archer", "archer", $db_name);
+$mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 
 $messaggio="";
 $submit= "<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Accedi\">
@@ -58,30 +58,29 @@ if (isset($_POST['registrati'])||isset($_POST['registrati2'])) {
     if (!empty($_POST['password'])&&!empty($_POST['password2'])&&!empty($_POST['userName'])){
       $sql = "SELECT *                                                
             FROM $STuser_table_name             
-            WHERE userName = \"{$_POST['userName']}\" AND password =\"{$_POST['password']}\"
+            WHERE userName = '{$_POST['userName']}' AND password ='{$_POST['password']}'
 		    ";
 
-    if (!$resultQ = mysqli_query($mysqliConnection, $sql)) {
-      printf("La query non ha risultato!\n");
-    }
+      if (!$resultQ = mysqli_query($mysqliConnection, $sql)) {
+        printf("La query non ha risultato!\n");
+        exit();
+      }
 
-    $row = mysqli_fetch_array($resultQ);        //salviamo la riga della tabella in questa variabile
+      $row = mysqli_fetch_array($resultQ);        //salviamo la riga della tabella in questa variabile
+    
+      if ($row) {    
+        if ($row['userName']) {                  //se esiste già un nome utente uguale
+          $messaggio= "Questo nome utente risulta già registrato!";
+        }
+      }
+      else {
+        if (($_POST['password'])==($_POST['password2'])) {
 
-    if ($row[userName]) {                  //se esiste già un nome utente uguale
-      $messaggio= "Questo nome utente risulta già registrato!";
-    }
-    else {
-      if (($_POST['password'])==($_POST['password2'])) {
         $sql = "INSERT INTO $STuser_table_name
 	              (userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
 	              VALUES ('{$_POST['userName']}', '{$_POST['password']}', '1', '0', '0', '1')
 	              ";
-        if ($resultQ = mysqli_query($mysqliConnection, $sql))
-          printf("Polamento user eseguito!!!\n");
-        else {
-          printf("Impossibile popolare tabella STuser.\n");
-          exit();
-        }
+       
         $submit="<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Accedi\">
                 <input class=\"button\" type=\"submit\" name=\"registrati\" value=\"Registrati\">";
         $inputpass = "";
