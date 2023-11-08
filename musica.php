@@ -1,8 +1,11 @@
 <?php
+session_start();
+
 require_once("./connessione.php");
 
 $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 
+echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -16,7 +19,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </head>
 
 <body>
-<?php require_once("./menù.html"); ?>
+<?php require_once("./menù.php"); ?>
 <hr />
 
 <div> 
