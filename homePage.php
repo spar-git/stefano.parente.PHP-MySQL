@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+?>
 <!DOCTYPE html
 PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -8,7 +13,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </head>
 
 <body>
-<?php require_once("./menù.html");?>
+<?php require_once("./menù.php");?>
 <hr />
 <h1 style="text-align: center; font-size: 36px;">Benvenuti nel nostro negozio online di Musica e Film!</h1>
 <img style="display: block; margin: 0 auto;" src="homeimg.jpg" alt="Immagine benvenuto">
