@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+?>
+
 <!DOCTYPE html
 PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -8,7 +14,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </head>
 
 <body>
-<?php require_once("./menù.html"); ?>
+<?php require_once("./menù.php"); ?>
 <hr />
 
 <div> 
@@ -27,16 +33,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     </p>
 </div>
 
-<div>
-	<div class="box-assistenza">
-    	<div>
-            
-    	</div>
-
-		<div>
-
-    	</div>
-
 <div class="dove-siamo-box">
     <a href="https://maps.app.goo.gl/ziUegZv8x3ngFcxN7"><img style="width: 220px; float: left; margin-right:20px; margin-bottom:10px;" src="mappa.png" alt="Dove siamo"></a>
     <div style="text-align: justify;">
@@ -52,6 +48,28 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </div>
 
 <div class="recensioni-box">
+    <?php
+    $sql = "SELECT title, autore, numVotiMusic, stelle, costoMusic FROM $STrecensioni_table_name";
+    $resultQ = $mysqliConnection->query($sql);
+
+    if ($resultQ) {
+        while ($row = $resultQ->fetch_assoc()) {
+            echo "<div class=\"recensione\">
+                <h2>" . $row["title"] . "</h2>
+                <p>Autore: " . $row["descrizione"] . "</p>
+                <p>Valutazione: " . $row["stelle"] . "</p>
+                <input class=\"button\" type=\"submit\" name=\"invio\" value=\"Aggiungi al carrello\">
+            </div>";
+        }
+    } else {
+        echo "Errore nella query: " . $mysqliConnection->error;
+    }
+    ?>
+
+
+
+
+    
     <h2 >Cosa dicono di noi</h2>
     <div class="recensione">
         <p>Nome: 1111<br>
@@ -61,14 +79,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         <p><strong>Titolo:<br></strong></p>
         <p>Testo recensione...<br></p>
     </div>
-    <div class="recensione">
-        <p>Nome: 1111<br>
-        Valutazione:<br>
-        Data e ora:<br>
-        </p>
-        <p><strong>Titolo:<br></strong></p>
-        <p>Testo recensione...<br></p>
-    </div>
+    
 </div>
 
         
