@@ -51,14 +51,14 @@ if (isset($_POST['invio'])) {                                        //è stato 
 
 // REGISTRAZIONE
 if (isset($_POST['registrati'])||isset($_POST['registrati2'])) {
-  $inputpass = "Conferma Password: <br><input style=\"padding: 2ex;\" type=\"text\" name=\"password2\" size=\"25\" /> <br>";
+  $inputpass = "Conferma Password: <br><input style=\"padding: 2ex;\" type=\"password\" name=\"password2\" size=\"25\" /> <br>";
   $submit= "<input class=\"button\" type=\"submit\" name=\"registrati2\" value=\"Registrati\">";
 
   if (isset($_POST['registrati2'])){
     if (!empty($_POST['password'])&&!empty($_POST['password2'])&&!empty($_POST['userName'])){
       $sql = "SELECT *                                                
             FROM $STuser_table_name             
-            WHERE userName = '{$_POST['userName']}' AND password ='{$_POST['password']}'
+            WHERE userName = '{$_POST['userName']}'
 		    ";
 
       if (!$resultQ = mysqli_query($mysqliConnection, $sql)) {
@@ -76,15 +76,19 @@ if (isset($_POST['registrati'])||isset($_POST['registrati2'])) {
       else {
         if (($_POST['password'])==($_POST['password2'])) {
 
-        $sql = "INSERT INTO $STuser_table_name
+          $sql = "INSERT INTO $STuser_table_name
 	              (userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
 	              VALUES ('{$_POST['userName']}', '{$_POST['password']}', '1', '0', '0', '1')
 	              ";
+          if (!$resultQ = mysqli_query($mysqliConnection, $sql)){
+          printf("Impossibile popolare tabella STuser.\n");
+          exit();
+          }
        
-        $submit="<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Accedi\">
+          $submit="<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Accedi\">
                 <input class=\"button\" type=\"submit\" name=\"registrati\" value=\"Registrati\">";
-        $inputpass = "";
-        $messaggio="Ti sei registrato correttamente! accedi per verificare";
+          $inputpass = "";
+          $messaggio="Ti sei registrato correttamente! accedi per verificare";
       }
       else
         $messaggio = "Le due password non corrispondono.";
@@ -107,7 +111,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </head>
 
 <body>
-<?php require_once("./menù.html"); ?>
+<?php require_once("./menù.php"); ?>
 <hr />
 <p style="text-align:center;color: red; font-family: Helvetica, sans-serif;">Unisciti a noi per iniziare a guadagnare punti fedeltà e sbloccare 
 fantastici sconti!<br>La registrazione è semplice, non perdere l'opportunità di 
@@ -120,10 +124,10 @@ risparmiare sui tuoi acquisti preferiti!</p>
     Username: <br>
     <input style="padding: 2ex;" type="text" name="userName" size="25" /> <br>
     Password: <br>
-    <input style="padding: 2ex;" type="text" name="password" size="25" /> <br>
+    <input style="padding: 2ex;" type="password" name="password" size="25" /> <br>
     <?php echo $inputpass ?>
   </p>
-  <?php echo $submit ?>
+  <p><?php echo $submit ?></p>
 </div>
 </form>
 
