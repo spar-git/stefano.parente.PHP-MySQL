@@ -33,7 +33,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <div>
 	<div class="box-prodotti">
 		<?php
-		$sql = "SELECT title, autore, numVotiMusic, stelle, costoMusic FROM $STmusic_table_name";
+		$sql = "SELECT title, autore, costoMusic FROM $STmusic_table_name";
 		$resultQ = $mysqliConnection->query($sql);
 
 		if ($resultQ) {
@@ -41,10 +41,11 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 				echo "<div class=\"prodotti\">
 					<h2>" . $row["title"] . "</h2>
 					<p>Autore: " . $row["autore"] . "</p>
-					<p>Numero voti: " . $row["numVotiMusic"] . "</p>
-					<p>Valutazione: " . $row["stelle"] . "</p>
 					<h3>Prezzo: " . $row["costoMusic"] . " €</h3>
-					<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Aggiungi al carrello\">
+					<form method=\"post\" action=\"gestione_carrello.php\">
+						<input type=\"hidden\" name=\"musicId\" value=\"" . $row["musicId"] . "\">
+						<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Aggiungi al carrello\">
+					</form>
 				</div>";
 			}
 		} else {
