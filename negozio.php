@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+require_once("./connessione.php");
+$mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
+
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 
@@ -48,39 +51,31 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </div>
 
 <div class="recensioni-box">
+    <h2> Cosa dicono di noi</h2>
     <?php
-    $sql = "SELECT title, autore, numVotiMusic, stelle, costoMusic FROM $STrecensioni_table_name";
+    $recensioni_presenti=false;
+    $sql = "SELECT title, descrizione, stelle, userId FROM $STrecensioni_table_name";
     $resultQ = $mysqliConnection->query($sql);
 
     if ($resultQ) {
         while ($row = $resultQ->fetch_assoc()) {
+            $recensioni_presenti=true;
             echo "<div class=\"recensione\">
-                <h2>" . $row["title"] . "</h2>
-                <p>Autore: " . $row["descrizione"] . "</p>
+                <p>Utente: " . $row["userId"] . "</p>
                 <p>Valutazione: " . $row["stelle"] . "</p>
-                <input class=\"button\" type=\"submit\" name=\"invio\" value=\"Aggiungi al carrello\">
+                <h3>" . $row["title"] . "</h2>
+                <p>" . $row["descrizione"] . "</p>
+                
             </div>";
         }
-    } else {
+    } else 
         echo "Errore nella query: " . $mysqliConnection->error;
-    }
+    if (!$recensioni_presenti)
+        echo "<p>Non ci sono ancora recensioni del sito...</p>"
     ?>
-
-
-
-
-    
-    <h2 >Cosa dicono di noi</h2>
-    <div class="recensione">
-        <p>Nome: 1111<br>
-        Valutazione:<br>
-        Data e ora:<br>
-        </p>
-        <p><strong>Titolo:<br></strong></p>
-        <p>Testo recensione...<br></p>
-    </div>
-    
 </div>
 
+</body>
+</html>
         
 
