@@ -130,6 +130,8 @@ div:not([class]) {
   padding: 20px;
   margin-top: 20px;
   text-align: justify;
+  margin-right: 200px;
+  margin-left: 200px;
 }
 
 .recensione {
@@ -137,4 +139,5 @@ div:not([class]) {
   border: 1px solid #d05aff;
   border-radius: 5px;
   margin-bottom: 5px;
+
 }
