@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("./connessione.php");
 
 $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
@@ -26,7 +27,6 @@ if (isset($_POST['invio'])) {                                        //è stato 
     $row = mysqli_fetch_array($resultQ);        //salviamo la riga della tabella in questa variabile
 
     if ($row) {                                 //se la riga selezionata esiste attiviamo la sessione per ricordare i dati dell'utente (lato server + il cookie di sessione lato client)
-      session_start();
       $_SESSION['userName']=$_POST['userName'];
       $_SESSION['userId']=$row['userId'];
       $_SESSION['tipologia']=$row['tipologia'];     //ce la portiamo nella pagina iniziale per capire i privilegi dell'utente (se 1 utente, se 2 gestore, se 3 admin)
