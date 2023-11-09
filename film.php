@@ -32,7 +32,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <div>
 	<div class="box-prodotti">
 	<?php
-		$sql = "SELECT title, genere, costoMovie, stelle, numVotiMovie FROM $STmovie_table_name";
+		$sql = "SELECT title, genere, costoMovie FROM $STmovie_table_name";
 		$resultQ = $mysqliConnection->query($sql);
 
 		if ($resultQ) {
@@ -40,8 +40,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 				echo "<div class=\"prodotti\">
 					<h2>" . $row["title"] . "</h2>
 					<p>Genere: " . $row["genere"] . "</p>
-					<p>Numero voti: " . $row["numVotiMovie"] . "</p>
-					<p>Valutazione: " . $row["stelle"] . "</p>
 					<h3>Prezzo: " . $row["costoMovie"] . " €</h3>
 					<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Aggiungi al carrello\">
 				</div>";
