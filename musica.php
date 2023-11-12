@@ -5,10 +5,15 @@ require_once("./connessione.php");
 
 $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 
+if (isset($_POST["invio"])) {
+    $music_id = $_POST["music_id"];
+
+    $_SESSION["carrello_music"][$music_id] = "Prodotto aggiunto al carrello!";
+}
+
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
 PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -31,29 +36,38 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </div>
 
 <div>
-	<div class="box-prodotti">
+<div class="box-prodotti">
 		<?php
-		$sql = "SELECT title, autore, costoMusic FROM $STmusic_table_name";
+		$sql = "SELECT musicId, title, autore, costoMusic FROM $STmusic_table_name";
 		$resultQ = $mysqliConnection->query($sql);
 
 		if ($resultQ) {
 			while ($row = $resultQ->fetch_assoc()) {
 				echo "<div class=\"prodotti\">
 					<h2>" . $row["title"] . "</h2>
+					<img style=\"width: 100px\" src=\"logomusic.png\">
 					<p>Autore: " . $row["autore"] . "</p>
 					<h3>Prezzo: " . $row["costoMusic"] . " €</h3>
-					<form method=\"post\" action=\"gestione_carrello.php\">
-						<input type=\"hidden\" name=\"musicId\" value=\"" . $row["musicId"] . "\">
+					
+					<form action=\"". $_SERVER['PHP_SELF'] ."\" method=\"post\">
+						<input type=\"hidden\" name=\"music_id\" value=\"" . $row["musicId"] . "\">
 						<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Aggiungi al carrello\">
 					</form>
-				</div>";
-			}
+					
+					<p style= color:red>";
+
+					if (isset($_SESSION["carrello_music"]) && !empty($_SESSION["carrello_music"][$row["musicId"]])) {
+						echo $_SESSION["carrello_music"][$row["musicId"]];
+					}
+
+					echo "</p>
+					
+					</div>";
+				}
+				
 		} else {
 			echo "Errore nella query: " . $mysqliConnection->error;
 		}
-		?>
-	</div>
-</div>
-
+?>
 </body>
 </html>
