@@ -141,3 +141,24 @@ div:not([class]) {
   margin-bottom: 5px;
 
 }
+
+/*----------- carrello -----------------*/
+.cart_list div  {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  width: 400px;
+  display: inline-block;
+}
+.price {
+  width: 100px;
+  display: inline-block;
+}
+
+.totale {
+  margin-left: 35px;
+  width: 400px;
+  display: inline-block;
+}
