@@ -5,8 +5,9 @@ require_once("./connessione.php");
 $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 
 $totale=0;
+$flag=0;
 
-if (isset($_POST["invio"])){
+if (isset($_POST["elimina"])){
 	if (isset($_POST["id_music"])){
 		$id_music= $_POST["id_music"];
 		unset($_SESSION['carrello_music'][$id_music]);
@@ -17,6 +18,7 @@ if (isset($_POST["invio"])){
 }
 
 if (isset($_POST["invia_recensione"])){
+	$flag=1;
 	$sql = "INSERT INTO $STrecensioni_table_name
 	(userId, title, descrizione, stelle)
 	VALUES
@@ -25,8 +27,19 @@ if (isset($_POST["invia_recensione"])){
 	if (!$resultQ = mysqli_query($mysqliConnection, $sql)){
     	printf("Impossibile popolare tabella STrecensioni.\n");
     	exit();
+	} else {
+		$valutazione=$_POST["stelle"];
+		echo "$valutazione";
+		
+		if ($valutazione>3) 
+			$valutazione= "Fantastico! Siamo lieti che tu abbia apprezzato il nostro lavoro, a presto!";
+		
+		if ($valutazione<=3)
+			$valutazione= "Siamo spiacenti per la tua esperienza negativa. Segnalaci il tuo problema a info@msonline.it e proveremo ad aiutarti!";  
+		
 	}
 }
+
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
@@ -54,6 +67,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 /* -------------- si giunge qui solo dopo aver premuto "Acquista"--------------------*/
 if (isset($_POST["acquista"])){
 	echo "<div><h1 style=\"color: green\">Grazie per aver acquistato dal nostro sito!</h1>";
+	$flag=1;
 	if(isset($_SESSION["userId"])) {
 	echo "Lascia una recensione"; 
 	?>	
@@ -63,7 +77,7 @@ if (isset($_POST["acquista"])){
     		<input type="radio" name="stelle" value="2"> 2
     		<input type="radio" name="stelle" value="3"> 3
     		<input type="radio" name="stelle" value="4"> 4
-    		<input type="radio" name="stelle" value="5" checked> 5
+    		<input type="radio" name="stelle" value="5"> 5
 			</p>
 			<p>Titolo: <textarea name="titolo" maxlength="20" rows="1" cols="30"></textarea><br></p>
 			<p>Descrizione:<br><textarea name="descrizione" maxlength="250" rows="4" cols="100"></textarea><br></p>
@@ -78,6 +92,10 @@ if (isset($_POST["acquista"])){
 	unset($_SESSION['carrello_movie']);
 	$totale=0;	//arrivati qui verrà cancellato il carrello e quindi le istruzioni successive non visualizzeranno nulla
 }
+if (isset($_POST["invia_recensione"])) {
+	$flag=1;
+	echo "<div><h2 style=\"color: green\">" . $valutazione . "</h2></div>";
+}
 ?>
 
 <div class="cart_list">
@@ -85,7 +103,7 @@ if (isset($_POST["acquista"])){
 
 <?php
 /*--------------------si giunge qui durante la normale navigazione del sito------------ */
-if (empty($_SESSION["carrello_music"])&&(empty($_SESSION["carrello_movie"]))){
+if (empty($_SESSION["carrello_music"])&&(empty($_SESSION["carrello_movie"]))&&$flag!=1){
 	echo "<div><p class=\"title\">Il carrello è vuoto</p></div>";
 }
 if (!empty($_SESSION["carrello_music"])) {
@@ -102,7 +120,7 @@ if (!empty($_SESSION["carrello_music"])) {
 					<span class=\"price\">" . $row["costoMusic"] . " €</span>
 					<form action=\"". $_SERVER['PHP_SELF'] ."\" method=\"post\">
 						<input type=\"hidden\" name=\"id_music\" value=\"" . $music_id . "\">
-						<input class=\"button\" type=\"submit\" name=\"invio\" value=\"X\">
+						<input class=\"button\" type=\"submit\" name=\"elimina\" value=\"X\">
 					</form>
 					</p></div>";
 					$totale+=$row["costoMusic"];
@@ -125,7 +143,7 @@ if (!empty($_SESSION["carrello_movie"])) {
 					<span class=\"price\">" . $row["costoMovie"] . " €</span>
 					<form action=\"". $_SERVER['PHP_SELF'] ."\" method=\"post\">
 						<input type=\"hidden\" name=\"id_movie\" value=\"" . $movie_id . "\">
-						<input class=\"button\" type=\"submit\" name=\"invio\" value=\"X\">
+						<input class=\"button\" type=\"submit\" name=\"elimina\" value=\"X\">
 					</form>
 					
 				</p></div>";
@@ -133,19 +151,30 @@ if (!empty($_SESSION["carrello_movie"])) {
 		}
 	}
 }
-?>
 
-<div>
-	<p>
-		<span class="totale"><strong>Totale</strong></span> 
-		<span class="price"><strong><?php echo $totale; ?> €</strong></span>
-		<?php if ($totale>0) { ?>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-			<input class="button" type="submit" name="acquista" value="Acquista">
-		</form>
-		<?php } ?>
-	</p>
-</div>
+if ($flag!=1){
+
+echo "<div><p>
+		<span class=\"totale\"><strong>Totale</strong></span>";
+		$sconto=1;
+		if (isset($_SESSION['puntiFedeltà'])){
+			if ($_SESSION['puntiFedeltà']>=20){
+				$sconto=0.80;
+				echo "<span class=\"price\"><strong><strike>" . $totale . " €</strike></strong><strong>" . $totale*$sconto . " €</strong></span>";
+			} else {
+				echo" <span class=\"price\"><strong>" . $totale . " €</strong></span>";
+			}
+		} else {
+		echo "<span class=\"price\"><strong>" . $totale . " €</strong></span>";
+		}
+		if ($totale>0) { 
+		echo "<form action=" . $_SERVER['PHP_SELF'] . " method=\"post\">
+			<input class=\"button\" type=\"submit\" name=\"acquista\" value=\"Acquista\">
+		</form>";
+		}
+} 
+?>
+</p></div>
 </div>
 			
 </body>
