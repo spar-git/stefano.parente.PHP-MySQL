@@ -54,18 +54,19 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h2> Cosa dicono di noi</h2>
     <?php
     $recensioni_presenti=false;
-    $sql = "SELECT title, descrizione, stelle, userId FROM $STrecensioni_table_name";
+    $sql = "SELECT $STrecensioni_table_name.userId, $STuser_table_name.userName, $STuser_table_name.userName, $STrecensioni_table_name.title, $STrecensioni_table_name.descrizione, $STrecensioni_table_name.stelle 
+        FROM $STrecensioni_table_name
+        INNER JOIN $STuser_table_name ON $STrecensioni_table_name.userId = $STuser_table_name.userId";
     $resultQ = $mysqliConnection->query($sql);
 
     if ($resultQ) {
         while ($row = $resultQ->fetch_assoc()) {
             $recensioni_presenti=true;
             echo "<div class=\"recensione\">
-                <p>Utente: " . $row["userId"] . "</p>
+                <p>Utente: " . $row["userName"] . "</p>
                 <p>Valutazione: " . $row["stelle"] . "</p>
                 <h3>" . $row["title"] . "</h2>
                 <p>" . $row["descrizione"] . "</p>
-                
             </div>";
         }
     } else 
