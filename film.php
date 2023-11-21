@@ -38,7 +38,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <div>
 <div class="box-prodotti">
 		<?php
-		$sql = "SELECT movieId, title, genere, costomovie FROM $STmovie_table_name";
+		$sql = "SELECT movieId, title, genere, costoMovie FROM $STmovie_table_name";
 		$resultQ = $mysqliConnection->query($sql);
 
 		if ($resultQ) {
