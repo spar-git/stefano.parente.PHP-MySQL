@@ -28,7 +28,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                 if (!isset($_SESSION['accessoPermesso'])){
                     echo "<a class=\"login\" href=\"login.php\">Login</a>";}
                 else {
-                    echo "<a class=\"login\" href=\"homePage.php?logout=1\">Logout</a>";
+                    echo "<a class=\"login\" href=\"login.php?logout=1\">Logout</a>";
                 }
             ?>
             <a class="cart" href="carrello.php">Carrello</a>
