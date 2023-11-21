@@ -162,3 +162,14 @@ div:not([class]) {
   width: 400px;
   display: inline-block;
 }
+
+/*--------------------amministratore-----------------------*/
+.tabella {
+  border-collapse: collapse;
+  width: 80%;
+}
+
+.tabella th, .tabella td {
+  border: 1px solid #000000;
+  padding: 8px;
+}
