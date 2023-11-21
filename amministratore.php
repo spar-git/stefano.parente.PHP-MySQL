@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['accessoPermesso'])) 
+  header('Location: login.php');
+
 require_once("./connessione.php");
 $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 
@@ -42,18 +45,25 @@ if (isset($_POST["aggiungi_movie"])) {
     }
 }
 
-if (isset($_POST["ban"])){
-    if (isset($_POST["ban_user"])) {
-        $banUser = $_POST["ban_user"];
-        $sql = "UPDATE $STuser_table_name 
-                SET stato = 0 
-                WHERE userId = $banUser";
-        if ($resultQ = mysqli_query($mysqliConnection, $sql))
-            $esito = ">>>>> Record modificato correttamente! <<<<<";
-        else {
-        $esito = ">>>>> Impossibile modificare il record <<<<<" . mysqli_error($mysqliConnection);
-        exit();
-        }
+if (isset($_POST["ban_unban"])){
+    if (isset($_POST["ban_unban_user"])&&isset($_POST["stato_user"])) {
+            if ($_POST["stato_user"]) {
+                $banUnbanUser = $_POST["ban_unban_user"];
+                $sql = "UPDATE $STuser_table_name 
+                        SET stato = 0 
+                        WHERE userId = $banUnbanUser";
+            } else {
+                $banUser = $_POST["ban_unban_user"];
+                $sql = "UPDATE $STuser_table_name 
+                        SET stato = 1 
+                        WHERE userId = $banUser";
+            }
+                if ($resultQ = mysqli_query($mysqliConnection, $sql))
+                    $esito = ">>>>> Record modificato correttamente! <<<<<";
+                else {
+                $esito = ">>>>> Impossibile modificare il record <<<<<" . mysqli_error($mysqliConnection);
+                exit();
+                }
     }
 }
 
@@ -61,9 +71,11 @@ if (isset($_POST["ban"])){
 if (isset($_POST["elimina"])){
     if (isset($_POST["delete_user"])){
         $userId = $_POST["delete_user"];
-        $sql = "DELETE FROM $STuser_table_name 
+        $sql1 = "DELETE FROM $STrecensioni_table_name 
+                WHERE userId = $userId";        
+        $sql2 = "DELETE FROM $STuser_table_name 
                 WHERE userId = $userId";
-        if ($result = mysqli_query($mysqliConnection, $sql)) {
+        if ($result1 = mysqli_query($mysqliConnection, $sql1)&&$result2 = mysqli_query($mysqliConnection, $sql2)) {
             $esito= ">>>>> Record eliminato correttamente! <<<<<";
         } else {
             $esito = ">>>>> Errore durante l'eliminazione del record <<<<<" . mysqli_error($mysqliConnection);
@@ -135,7 +147,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             <th>tipologia</th>
             <th>stato</th>
             <th>elimina</th>
-            <th>banna</th>
+            <th>modifica</th>
 
         </tr>
     </thead>
@@ -158,8 +170,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             <input class=\"button\" type=\"submit\" name=\"elimina\" value=\"X\">
             </td>
             <td> 
-            <input type=\"hidden\" name=\"ban_user\" value=\"" . $row["userId"] . "\">
-            <input class=\"button\" type=\"submit\" name=\"ban\" value=\"Ban\">
+            <input type=\"hidden\" name=\"stato_user\" value=\"" . $row["stato"] . "\">
+            <input type=\"hidden\" name=\"ban_unban_user\" value=\"" . $row["userId"] . "\">
+            <input class=\"button\" type=\"submit\" name=\"ban_unban\" value=\"Ban/Unban\">
             </form> 
             </td>
             </tr>";
