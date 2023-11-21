@@ -42,7 +42,6 @@ $sqlQuery.= "userId int NOT NULL auto_increment, primary key (userId), ";
 $sqlQuery.= "userName varchar (50) NOT NULL, ";
 $sqlQuery.= "password varchar (32) NOT NULL, ";
 $sqlQuery.= "tipologia smallint,";                        //se 1 utente, se 2 admin
-$sqlQuery.= "puntiFedeltà float,";                        //acquisisce punti in base alle spese (possono essere azzerati se utilizzati per lo sconto)
 $sqlQuery.= "stato boolean";                             //se 1 attivo, se 0 bannato
 $sqlQuery.= ");";                                 
 
@@ -114,9 +113,9 @@ echo mysqli_errno($mysqliConnection);
 
 // popolamento tabella utenti
 $sql = "INSERT INTO $STuser_table_name
-	(userName, password, tipologia, puntiFedeltà, stato)
+	(userName, password, tipologia, stato)
 	VALUES
-	(\"stefano\", \"pass123\", \"2\", \"0\", \"1\")
+	(\"stefano\", \"pass123\", \"2\", \"1\")
 	";
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
@@ -127,9 +126,9 @@ else {
 }
 
 $sql = "INSERT INTO $STuser_table_name
-	(userName, password, tipologia, , puntiFedeltà, stato)
+	(userName, password, tipologia, stato)
 	VALUES
-	(\"paolo\", \"pass456\", \"1\", \"0\", \"1\")
+	(\"paolo\", \"pass456\", \"1\", \"1\")
 	";
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
@@ -140,9 +139,9 @@ else {
 }
 
 $sql = "INSERT INTO $STuser_table_name
-	(userName, password, tipologia, , puntiFedeltà, stato)
+	(userName, password, tipologia, stato)
 	VALUES
-	(\"sara\", \"pass789\", \"1\", \"0\", \"1\")
+	(\"sara\", \"pass789\", \"1\", \"1\")
 	";
 
 if ($resultQ = mysqli_query($mysqliConnection, $sql))
