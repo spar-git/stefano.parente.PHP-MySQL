@@ -63,8 +63,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         while ($row = $resultQ->fetch_assoc()) {
             $recensioni_presenti=true;
             echo "<div class=\"recensione\">
-                <p>Utente: " . $row["userName"] . "</p>
-                <p>Valutazione: " . $row["stelle"] . "/5</p>
+                <p style=\"font-size: 13px\">Utente: " . $row["userName"] . "<br>
+                Valutazione: " . $row["stelle"] . "/5</p>
                 <h3>" . $row["title"] . "</h2>
                 <p>" . $row["descrizione"] . "</p>
             </div>";
