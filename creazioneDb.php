@@ -273,19 +273,6 @@ else {
 $sql = "INSERT INTO $STmusic_table_name
 	(title, costoMusic, autore)
 	VALUES
-	(\"La storia siamo noi\", \"4\", \"Francesco De Gregori\")
-	";
-
-if ($resultQ = mysqli_query($mysqliConnection, $sql))
-    printf("Polamento music eseguito!!!\n");
-else {
-    printf("Impossibile popolare tabella STmusic.\n");
-  exit();
-}
-
-$sql = "INSERT INTO $STmusic_table_name
-	(title, costoMusic, autore)
-	VALUES
 	(\"Sally\", \"6\", \"Vasco Rossi\")
 	";
 
