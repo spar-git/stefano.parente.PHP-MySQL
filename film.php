@@ -47,7 +47,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 					<h2>" . $row["title"] . "</h2>
 					<img style=\"width: 100px\" src=\"logomovie.png\">
 					<p>Genere: " . $row["genere"] . "</p>
-					<h3>Prezzo: " . $row["costomovie"] . " €</h3>
+					<h3>Prezzo: " . $row["costoMovie"] . " €</h3>
 					
 					<form action=\"". $_SERVER['PHP_SELF'] ."\" method=\"post\">
 						<input type=\"hidden\" name=\"movie_id\" value=\"" . $row["movieId"] . "\">
