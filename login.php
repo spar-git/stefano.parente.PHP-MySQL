@@ -30,8 +30,6 @@ if (isset($_POST['invio'])) {                                        //è stato 
       $_SESSION['userName']=$_POST['userName'];
       $_SESSION['userId']=$row['userId'];
       $_SESSION['tipologia']=$row['tipologia'];     //ce la portiamo nella pagina iniziale per capire i privilegi dell'utente (se 1 utente, se 2 gestore, se 3 admin)
-      $_SESSION['sommeSpese']=$row['sommeSpese'];
-      $_SESSION['puntiFedeltà']=$row['puntiFedeltà'];
       // $_SESSION['stato']=$row['stato'];          //non ci serve dopo, ma solo qui nel login per controllare l'utente
       $_SESSION['dataLogin']=time();
       $_SESSION['accessoPermesso']=1000;
@@ -113,8 +111,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
 <?php require_once("./menù.php"); ?>
 <hr />
-<p style="text-align:center;color: red; font-family: Helvetica, sans-serif;">Unisciti a noi per iniziare a guadagnare punti fedeltà e sbloccare 
-fantastici sconti!<br>La registrazione è semplice, non perdere l'opportunità di 
+<p style="text-align:center;color: red; font-family: Helvetica, sans-serif;">Unisciti a noi per restare aggiornato sulle ultime novità!<br>La registrazione è semplice, non perdere l'opportunità di 
 risparmiare sui tuoi acquisti preferiti!</p>
 
 <div style="text-align: center;background-color: #e2e2e2;padding: 5px; border: 1px solid #d05aff; 
