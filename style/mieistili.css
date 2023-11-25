@@ -1,0 +1,175 @@
+body, html {      /* regole necessarie a correggere margini indesiderati attorno al menù */
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+/* ---------stili per il menù--------------*/
+.menu-container {
+  background-color: #0e0f16;
+  position: fixed; 
+  width: 100%;
+  margin:0;
+  padding:0;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 200px;
+  margin-left: 20px;
+}
+
+.menu-list {
+  font-family: 'Cursive', cursive;
+  font-size: 20px;
+  list-style: none;
+  display: flex;
+  margin-left: 40px;
+  margin-top: 100px;
+}
+
+.menu-list li {
+  margin-right: 25px;
+}
+
+.menu-list li:last-child {
+  margin-right: 0;
+}
+
+.menu-list a {
+  text-decoration: none;
+  color: rgb(219, 219, 219);
+}
+
+.menu-list a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.user-menu {
+  display: flex;
+  margin-left: auto;
+  margin-top: 70px;
+  padding:0;
+}
+
+.login,
+.cart {
+  margin-right: 20px;
+  color: rgb(219, 219, 219);
+  padding: 5px;
+  border: 1px solid rgb(219, 219, 219);
+  text-decoration: none;
+}
+
+.login:hover,
+.cart:hover {
+  text-decoration: none;
+  color:white;
+}
+
+
+/* --------- stili generali ---------*/
+body{
+  font-family: 'Open Sans', Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.path {
+  font-family: Arial, sans-serif;
+  color: rgb(105, 102, 102);
+  font-size: 15px;
+  margin-top: 20px;
+}
+.path a {
+  text-decoration: none;
+  color:  rgb(105, 102, 102);
+}
+
+.path a:hover {
+  color:  rgb(0, 0, 0);
+}
+
+div:not([class]) {
+  max-width: 1000px; 
+  margin: 0 auto; 
+  text-align: justify; 
+}
+
+/*--------- prodotti ----------*/
+
+.box-prodotti {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.prodotti {
+  width: 25%; 
+  padding: 20px;
+  border: 1px solid #ddd; 
+  margin: 20px; 
+  text-align: center;
+}
+
+/*----------- negozio -----------------*/
+.dove-siamo-box {
+  background-color: #e2e2e2;
+  padding: 40px;
+  border: 1px solid #d05aff;
+  border-radius: 5px;
+  margin-right: 150px;
+  margin-left: 150px;
+}
+
+.recensioni-box {
+  padding: 20px;
+  margin-top: 20px;
+  text-align: justify;
+  margin-right: 200px;
+  margin-left: 200px;
+}
+
+.recensione {
+  padding: 10px;
+  border: 1px solid #d05aff;
+  border-radius: 5px;
+  margin-bottom: 30px;
+
+}
+
+/*----------- carrello -----------------*/
+.cart_list div  {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  width: 400px;
+  display: inline-block;
+}
+.price {
+  width: 100px;
+  display: inline-block;
+}
+
+.totale {
+  margin-left: 35px;
+  width: 400px;
+  display: inline-block;
+}
+
+/*--------------------amministratore-----------------------*/
+.tabella {
+  border-collapse: collapse;
+  width: 80%;
+}
+
+.tabella th, .tabella td {
+  border: 1px solid #000000;
+  padding: 8px;
+}
