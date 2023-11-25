@@ -1,4 +1,4 @@
-body, html {
+body, html {      /* regole necessarie a correggere margini indesiderati attorno al menù */
   margin: 0;
   margin-bottom: 20px;
   padding: 0;
