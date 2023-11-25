@@ -4,9 +4,9 @@ session_start();
 require_once("./connessione.php");
 $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 
-$totale=0;
-$flag=0;
-
+$totale=0;					// totale del carrello
+$flag=0;					// utile per far scomparire o apparire delle informazioni in determinati momenti
+// ELIMINAZIONE DEL PRODOTTO NEL CARRELLO e cancellazione della rispettiva variabile di sessione
 if (isset($_POST["elimina"])){
 	if (isset($_POST["id_music"])){
 		$id_music= $_POST["id_music"];
@@ -17,6 +17,7 @@ if (isset($_POST["elimina"])){
 	}
 }
 
+// INSERIMENTO RECORD NELLA TABELLA RECENSIONI e messaggio relativo alla valutazione dell'utente
 if (isset($_POST["invia_recensione"])){
 	$flag=1;
 	$sql = "INSERT INTO $STrecensioni_table_name
@@ -31,9 +32,9 @@ if (isset($_POST["invia_recensione"])){
 		$valutazione=$_POST["stelle"];
 		echo "$valutazione";
 		
-		if ($valutazione>3) 
+		if ($valutazione>3) 		// considerata positiva
 			$valutazione= "Fantastico! Siamo lieti che tu abbia apprezzato il nostro lavoro, a presto!";
-		else
+		else						// considerata negativa
 			$valutazione= "Siamo spiacenti per la tua esperienza negativa. Segnalaci il problema a info@msonline.it e proveremo ad aiutarti!";  
 		
 	}
@@ -86,13 +87,13 @@ if (isset($_POST["acquista"])){
 	}
 	echo "</div>";
 	
-
+	//qui verrà azzerato il carrello, quindi niente più prodotti ne totale visibili nella pagina
 	unset($_SESSION['carrello_music']);     
 	unset($_SESSION['carrello_movie']);
-	$totale=0;	//arrivati qui verrà cancellato il carrello e quindi le istruzioni successive non visualizzeranno nulla
+	$totale=0;	
 }
 if (isset($_POST["invia_recensione"])) {
-	$flag=1;
+	$flag=1;			//quando si preme "invia recensione" il flag va a 1 per fa scomparire le informazioni precedenti
 	echo "<div><h2 style=\"color: green\">" . $valutazione . "</h2></div>";
 }
 ?>
@@ -102,7 +103,7 @@ if (isset($_POST["invia_recensione"])) {
 
 <?php
 /*--------------------si giunge qui durante la normale navigazione del sito------------ */
-if (empty($_SESSION["carrello_music"])&&(empty($_SESSION["carrello_movie"]))&&$flag!=1){
+if (empty($_SESSION["carrello_music"])&&(empty($_SESSION["carrello_movie"]))&&$flag=0){		//di default si parte con flag=0
 	echo "<div><p class=\"title\">Il carrello è vuoto</p></div>";
 }
 if (!empty($_SESSION["carrello_music"])) {
@@ -151,7 +152,7 @@ if (!empty($_SESSION["carrello_movie"])) {
 	}
 }
 
-if ($flag!=1){
+if ($flag=0){
 	echo "<div><p>";
 	if ($totale>0) { 
 		echo "<span class=\"totale\"><strong>Totale</strong></span>
