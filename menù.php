@@ -1,5 +1,5 @@
 <?php
-if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+if (isset($_GET['logout']) && $_GET['logout'] == 1) {     // tale condizione sarà verà quando l'utente premerà il tasto "Logout"
     unset($_SESSION);
     session_destroy();
 }
@@ -25,10 +25,10 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
         </ul>
         <div class="user-menu">
             <?php
-                if (!isset($_SESSION['accessoPermesso'])){
+                if (!isset($_SESSION['accessoPermesso'])){                             //vera nel caso in cui non si abbia effettuato l'accesso
                     echo "<a class=\"login\" href=\"login.php\">Login</a>";}
-                else {
-                    echo "<a class=\"login\" href=\"login.php?logout=1\">Logout</a>";
+                else {                                                                 //vera nel caso in cui si abbia effettuato l'accesso
+                    echo "<a class=\"login\" href=\"login.php?logout=1\">Logout</a>";  //viene iniettata una query string di tipo GET per cancellare la sessione
                 }
             ?>
             <a class="cart" href="carrello.php">Carrello</a>
