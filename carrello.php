@@ -1,8 +1,10 @@
 <?php
 session_start();
 
-require_once("./connessione.php");
-$mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
+require_once("./setup/connessione.php");
+if (!$mysqliConnection->select_db($db_name)) {
+    echo "Errore nella selezione del database: " . $mysqliConnection->error;
+}
 
 $totale=0;					// totale del carrello
 $flag=0;					// utile per far scomparire o apparire delle informazioni in determinati momenti
@@ -32,11 +34,14 @@ if (isset($_POST["invia_recensione"])){
 		$valutazione=$_POST["stelle"];
 		echo "$valutazione";
 		
-		if ($valutazione>3) 		// considerata positiva
+		if ($valutazione>3) {		// considerata positiva
 			$valutazione= "Fantastico! Siamo lieti che tu abbia apprezzato il nostro lavoro, a presto!";
-		else						// considerata negativa
+			mysqli_close($mysqliConnection);
+		}
+		else {						// considerata negativa
 			$valutazione= "Siamo spiacenti per la tua esperienza negativa. Segnalaci il problema a info@msonline.it e proveremo ad aiutarti!";  
-		
+			mysqli_close($mysqliConnection);
+		}
 	}
 }
 
@@ -49,7 +54,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<link rel="stylesheet" type="text/css" href="mieistili.css">
+	<link rel="stylesheet" type="text/css" href="style/mieistili.css">
 	<title>Carrello della spesa</title>
 </head>
 
@@ -100,10 +105,9 @@ if (isset($_POST["invia_recensione"])) {
 
 <div class="cart_list">
 
-
 <?php
 /*--------------------si giunge qui durante la normale navigazione del sito------------ */
-if (empty($_SESSION["carrello_music"])&&(empty($_SESSION["carrello_movie"]))&&$flag=0){		//di default si parte con flag=0
+if (empty($_SESSION["carrello_music"])&&(empty($_SESSION["carrello_movie"]))&&$flag==0){		//di default si parte con flag=0
 	echo "<div><p class=\"title\">Il carrello è vuoto</p></div>";
 }
 if (!empty($_SESSION["carrello_music"])) {				
@@ -115,7 +119,7 @@ if (!empty($_SESSION["carrello_music"])) {
 				$row = $resultQ->fetch_assoc();
 				echo "<div>
 					<p>
-					<img style=\"width: 30px\" src=\"logomusic.png\">
+					<img style=\"width: 30px\" src=\"img/logomusic.png\">
 					<span class=\"title\">" . $row["title"] ."</span> 
 					<span class=\"price\">" . $row["costoMusic"] . " €</span>
 					<form action=\"". $_SERVER['PHP_SELF'] ."\" method=\"post\">
@@ -138,7 +142,7 @@ if (!empty($_SESSION["carrello_movie"])) {
 			$row = $resultQ->fetch_assoc();
 			echo "<div>
 				<p>
-					<img style=\"width: 30px\" src=\"logomovie.png\">
+					<img style=\"width: 30px\" src=\"img/logomovie.png\">
 					<span class=\"title\">" . $row["title"] ."</span> 
 					<span class=\"price\">" . $row["costoMovie"] . " €</span>
 					<form action=\"". $_SERVER['PHP_SELF'] ."\" method=\"post\">
@@ -152,7 +156,7 @@ if (!empty($_SESSION["carrello_movie"])) {
 	}
 }
 
-if ($flag=0){
+if ($flag==0){
 	echo "<div><p>";					
 	if ($totale>0) { 				// condizione vera se l'utente ha degli articoli nel carrello
 		echo "<span class=\"totale\"><strong>Totale</strong></span>
