@@ -3,12 +3,12 @@ https://github.com/spar-git/stefano.parente.PHP-MySQL
 
 Questo homework è stato sviluppato sulla base dell'esercizio "carrello.della.spesa3"; l'idea è stata quella di approfondire la gestione del database,
 implementando script php per la corretta interrogazione dello stesso. L'aspetto grafico non è stato trascurato, ho voluto inserire regole di stile esterne 
-("mieistili.css") ed interne (inline style), affinchè l'interfaccia risultasse gradevole e in molti contesti dinamica.
+("style/mieistili.css") ed interne (inline style), affinchè l'interfaccia risultasse gradevole e in molti contesti dinamica.
 
-- Installazione. Per il corretto setup del database accedere al codice sorgente del file denominato "connessione.php" e modificare nome utente e password 
+- Installazione. Per il corretto setup del database accedere al codice sorgente del file "setup/connessione.php" e modificare nome utente e password 
 (riga 9) con le credenziali corrispondenti al proprio ambiente MySQL. Dopo aver effettuato le modifiche, salvare il file ed inserire la directory nel proprio 
 server locale. Una volta completata questa operazione, è possibile accedere al progetto tramite il browser web. Per avviare l'installazione effettiva del database, 
-è sufficiente accedere al file "creazioneDb.php". Questo file non solo permetterà la creazione del database, ma si occuperà anche di un parziale popolamento 
+è sufficiente accedere al file "setup/install.php". Questo file non solo permetterà la creazione del database, ma si occuperà anche di un parziale popolamento 
 dello stesso.
 
 - Da dove accedere. L'accesso al sito web può avvenire da qualsiasi pagina, in quanto visitabile anche da utenti non registrati. D'altra parte la registrazione è
