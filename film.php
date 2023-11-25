@@ -5,10 +5,10 @@ require_once("./connessione.php");
 
 $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 
-if (isset($_POST["invio"])) {
+if (isset($_POST["invio"])) { 		
     $movie_id = $_POST["movie_id"];
 
-    $_SESSION["carrello_movie"][$movie_id] = "Prodotto aggiunto al carrello!";
+    $_SESSION["carrello_movie"][$movie_id] = "Prodotto aggiunto al carrello!";  //variabile di sessione (array associativo multidimensionale)
 }
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
