@@ -1,14 +1,18 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['accessoPermesso'])) 
-  header('Location: login.php');
+if (!isset($_SESSION['accessoPermesso']))       // impedisce l'accesso a chi non è iscritto
+    header('Location: login.php');
+if(isset($_SESSION['accessoPermesso']))         // impedisce l'accesso a chi non è amministratore 
+    if ($_SESSION['tipologia']!=2)
+        header('Location: login.php');
 
 require_once("./connessione.php");
 $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 
 $esito="";
 
+// AGGIUNTA DEL RECORD NELLA TABELLA MUSICA
 if (isset($_POST["aggiungi_musica"])) {
     $titolo = $_POST["title_music"];
     $autore = $_POST["autore_music"];
@@ -27,6 +31,7 @@ if (isset($_POST["aggiungi_musica"])) {
     }
 }
 
+// AGGIUNTA DEL RECORD NELLA TABELLA MOVIE
 if (isset($_POST["aggiungi_movie"])) {
     $titolo = $_POST["title_movie"];
     $genere = $_POST["genere_movie"];
@@ -45,15 +50,16 @@ if (isset($_POST["aggiungi_movie"])) {
     }
 }
 
+// MODIFICA ATTRIBUTO "stato" DEL RECORD NELLA TABELLA USER
 if (isset($_POST["ban_unban"])){
     if (isset($_POST["ban_unban_user"])&&isset($_POST["stato_user"])) {
-            if ($_POST["stato_user"]) {
+            if ($_POST["stato_user"]) {                           // se non è bannato, fai il ban
                 $banUnbanUser = $_POST["ban_unban_user"];
                 $sql = "UPDATE $STuser_table_name 
                         SET stato = 0 
                         WHERE userId = $banUnbanUser";
             } else {
-                $banUser = $_POST["ban_unban_user"];
+                $banUser = $_POST["ban_unban_user"];               // se è bannato, fai l'unban
                 $sql = "UPDATE $STuser_table_name 
                         SET stato = 1 
                         WHERE userId = $banUser";
@@ -66,20 +72,20 @@ if (isset($_POST["ban_unban"])){
                 }
     }
 }
-
-
+// ELIMINAZIONE RECORD DALLA TABELLA UTENTI
 if (isset($_POST["elimina"])){
     if (isset($_POST["delete_user"])){
         $userId = $_POST["delete_user"];
-        $sql1 = "DELETE FROM $STrecensioni_table_name 
+        $sql1 = "DELETE FROM $STrecensioni_table_name       /* prima eliminiamo le recensioni associate all'utente */
                 WHERE userId = $userId";        
-        $sql2 = "DELETE FROM $STuser_table_name 
+        $sql2 = "DELETE FROM $STuser_table_name             /* poi l'utente stesso */
                 WHERE userId = $userId";
         if ($result1 = mysqli_query($mysqliConnection, $sql1)&&$result2 = mysqli_query($mysqliConnection, $sql2)) {
             $esito= ">>>>> Record eliminato correttamente! <<<<<";
         } else {
             $esito = ">>>>> Errore durante l'eliminazione del record <<<<<" . mysqli_error($mysqliConnection);
         }
+    // ELIMINAZIONE RECORD DALLA TABELLA MUSICA
     } else if (isset($_POST["delete_music"])){
         $musicId = $_POST["delete_music"];
         $sql = "DELETE FROM $STmusic_table_name 
@@ -89,6 +95,7 @@ if (isset($_POST["elimina"])){
         } else {
             $esito = ">>>>> Errore durante l'eliminazione del record <<<<<" . mysqli_error($mysqliConnection);
         }
+    //ELIMINAZIONE RECORD DALLA TABELLA MOVIE
     } else if (isset($_POST["delete_movie"])) {
         $movieId = $_POST["delete_movie"];
         $sql = "DELETE FROM $STmovie_table_name 
@@ -98,6 +105,7 @@ if (isset($_POST["elimina"])){
         } else {
             $esito = ">>>>> Errore durante l'eliminazione del record <<<<<" . mysqli_error($mysqliConnection);
         }
+    //ELIMINAZIONE RECORD DALLA TABELLA RECENSIONI
     } else if (isset($_POST["delete_recensioni"])) {
         $recensioneId = $_POST["delete_recensioni"];
         $sql = "DELETE FROM $STrecensioni_table_name 
