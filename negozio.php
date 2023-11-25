@@ -1,8 +1,10 @@
 <?php
 session_start();
 
-require_once("./connessione.php");
-$mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
+require_once("./setup/connessione.php");
+if (!$mysqliConnection->select_db($db_name)) {
+    echo "Errore nella selezione del database: " . $mysqliConnection->error;
+}
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
@@ -12,7 +14,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<link rel="stylesheet" type="text/css" href="mieistili.css">
+	<link rel="stylesheet" type="text/css" href="style/mieistili.css">
 	<title>il negozio</title>
 </head>
 
@@ -37,7 +39,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </div>
 
 <div class="dove-siamo-box">
-    <a href="https://maps.app.goo.gl/ziUegZv8x3ngFcxN7"><img style="width: 220px; float: left; margin-right:20px; margin-bottom:10px;" src="mappa.png" alt="Dove siamo"></a>
+    <a href="https://maps.app.goo.gl/ziUegZv8x3ngFcxN7"><img style="width: 220px; float: left; margin-right:20px; margin-bottom:10px;" src="img/mappa.png" alt="Dove siamo"></a>
     <div style="text-align: justify;">
         <h2 >Dove Siamo</h2>
         <p>La sede di Media Shop Online si trova in Via A. Doria, 23, a Latina. Per raggiungerci, segui le seguenti indicazioni:<br><br></p>
