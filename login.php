@@ -29,9 +29,8 @@ if (isset($_POST['invio'])) {                                        //è stato 
     if ($row) {                                 //se la riga selezionata esiste attiviamo la sessione per ricordare i dati dell'utente (lato server + il cookie di sessione lato client)
       $_SESSION['userName']=$_POST['userName'];
       $_SESSION['userId']=$row['userId'];
-      $_SESSION['tipologia']=$row['tipologia'];     //ce la portiamo nella pagina iniziale per capire i privilegi dell'utente (se 1 utente, se 2 gestore, se 3 admin)
+      $_SESSION['tipologia']=$row['tipologia'];     //ce la portiamo nella pagina iniziale per capire i privilegi dell'utente (se 1 utente, se 2 admin)
       // $_SESSION['stato']=$row['stato'];          //non ci serve dopo, ma solo qui nel login per controllare l'utente
-      $_SESSION['dataLogin']=time();
       $_SESSION['accessoPermesso']=1000;
 
       if ($row['stato']==1) {                 //se TRUE l'utente è attivo e può accedere al sito...
@@ -64,15 +63,15 @@ if (isset($_POST['registrati'])||isset($_POST['registrati2'])) {
         exit();
       }
 
-      $row = mysqli_fetch_array($resultQ);        //salviamo la riga della tabella in questa variabile
+      $row = mysqli_fetch_array($resultQ);        
     
       if ($row) {    
-        if ($row['userName']) {                  //se esiste già un nome utente uguale
+        if ($row['userName']) {                  //se esiste già un nome utente uguale, impedisci la registrazione 
           $messaggio= "Questo nome utente risulta già registrato!";
         }
       }
-      else {
-        if (($_POST['password'])==($_POST['password2'])) {
+      else {                                      // caso in cui non esiste un nome utente uguale a quello inserito
+        if (($_POST['password'])==($_POST['password2'])) {      //se le due password coincidono, procediamo alla registrazione dell'utente nel database
 
           $sql = "INSERT INTO $STuser_table_name
 	              (userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
@@ -86,14 +85,14 @@ if (isset($_POST['registrati'])||isset($_POST['registrati2'])) {
           $submit="<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Accedi\">
                 <input class=\"button\" type=\"submit\" name=\"registrati\" value=\"Registrati\">";
           $inputpass = "";
-          $messaggio="Ti sei registrato correttamente! accedi per verificare";
+          $messaggio="Ti sei registrato correttamente! accedi per verificare";      // registrazione avvenuta
       }
       else
-        $messaggio = "Le due password non corrispondono.";
+        $messaggio = "Le due password non corrispondono.";                    // la password di conferma non corrisponde alla prima
     }      
   }
   else 
-      $messaggio = "Alcuni campi risultano mancanti.";
+      $messaggio = "Alcuni campi risultano mancanti.";                        // impedisce di lasciare vuori dei campi
   }
 }
 ?>
