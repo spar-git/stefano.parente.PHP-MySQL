@@ -19,7 +19,7 @@ if (isset($_POST["elimina"])){
 
 // INSERIMENTO RECORD NELLA TABELLA RECENSIONI e messaggio relativo alla valutazione dell'utente
 if (isset($_POST["invia_recensione"])){
-	$flag=1;
+	$flag=1;				 
 	$sql = "INSERT INTO $STrecensioni_table_name
 	(userId, title, descrizione, stelle)
 	VALUES
@@ -106,7 +106,7 @@ if (isset($_POST["invia_recensione"])) {
 if (empty($_SESSION["carrello_music"])&&(empty($_SESSION["carrello_movie"]))&&$flag=0){		//di default si parte con flag=0
 	echo "<div><p class=\"title\">Il carrello è vuoto</p></div>";
 }
-if (!empty($_SESSION["carrello_music"])) {
+if (!empty($_SESSION["carrello_music"])) {				
     foreach ($_SESSION["carrello_music"] as $music_id => $messaggio) {
 		$sql = "SELECT musicId, title, autore, costoMusic FROM $STmusic_table_name WHERE musicId = $music_id";
 		$resultQ = $mysqliConnection->query($sql);
@@ -153,8 +153,8 @@ if (!empty($_SESSION["carrello_movie"])) {
 }
 
 if ($flag=0){
-	echo "<div><p>";
-	if ($totale>0) { 
+	echo "<div><p>";					
+	if ($totale>0) { 				// condizione vera se l'utente ha degli articoli nel carrello
 		echo "<span class=\"totale\"><strong>Totale</strong></span>
 			<span class=\"price\";><strong>" . $totale ." €</strong></span>
 			<form action=" . $_SERVER['PHP_SELF'] . " method=\"post\">
