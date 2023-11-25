@@ -17,10 +17,10 @@ esclusivamente all'amministratore tramite apposito codice di controllo.
 
 - menù.php. Questa pagina è stata creata per semplificare l'inclusione del menù in tutte le pagine del sito. Seppur apparentemente statica, è presente 
 l'istruzione che permette la chiusura/distruzione della sessione durante il logout. Fondamentalmente ho deciso di iniettare manualmente una query string di tipo
-GET direttamente nell'URL di reindirizzamento al login quando l'utente preme "logout" (riga 31). Quando questa stringa viene inviata la pagina stessa "menù.php" 
-la ottiene e scatena la chiusura/distruzione della sessione in corso. Riapparirà a questo punto il tasto "login". Inoltre, non meno importante, avviene la verifica
-che l'utente sia o meno l'amministratore (if($_SESSION['tipologia']==2)), in caso di esito positivo apparirà nel menù anche una voce speciale riservata alla 
-gestione del database.        
+GET direttamente nell'URL di reindirizzamento al login quando l'utente preme "logout" (riga 31). Quando questa stringa viene inviata, la pagina stessa "menù.php" 
+la ottiene e scatena la chiusura/distruzione della sessione in corso. Riapparirà a questo punto il tasto "login". Inoltre, non meno importante, incorpora la 
+verifica che l'utente sia o meno l'amministratore (if($_SESSION['tipologia']==2)), in caso di esito positivo apparirà nel menù anche una voce speciale riservata
+alla gestione del database.        
 
 - login.php. L'utente può effettuare l'accesso, ma anche registrarsi. L'utente potrà effettuare l'accesso solo se: ha inserito entrambi i campi, è presente nel 
 database, risulta attivo (non bannato). Queste condizioni effettuano interrogazioni al database e in caso di esito negativo, viene restituito il corrispondente 
@@ -40,21 +40,34 @@ apparirà un messaggio dell'avvenuta aggiunta proprio nel medesimo riquadro; per
 duplice finalità: la prima proprio quella di consentire l'apparizione del messaggio nel riquadro dell'articolo, la seconda quella di poter salvare in qualche 
 maniera l'id dell'articolo aggiunto al carrello e poterlo poi ricevere, in qualsiasi momento della navigazione, all'interno della pagina "carrello.php". In 
 particolare, definirei la struttura di sessione utilizzata come un'array associativo multidimensionale, dove la prima chiave rappresenta la categoria dei 
-prodotti selezionati (musica o film) mentre la seconda chiave rappresenta il loro id nel database (musicId o movieId).
+prodotti selezionati (musica o film) mentre la seconda chiave rappresenta il loro id nel database.
 
 - negozio.php. Seppur la prima parte risulti statica, costituita infatti da elementi html e regole di stile, in fondo alla pagina è possibile osservare 
 un messaggio riferito all'assenza di commenti da parte degli utenti. Quando un'utente registrato acquista dallo shop, potrà recensire la sua esperienza 
-d'acquisto. Scomparirà il messaggio e apparirà in quell'area il suo commento, visibile a chiunque navighi nel sito, utenti registrati e non. Un'utente non 
+d'acquisto. Scomparirà il messaggio e apparirà in quell'area il suo commento, visibile a chiunque navighi nel sito, utenti registrati e non. Un utente non 
 registrato non potrà recensire il sito. Anche in questo contesto avvengono interrogazioni al database tramite una SELECT che cerca eventuali commenti nella 
 tabella "STrecensioni" e tramite comandi iterativi le visualizza in fondo alla pagina con opportuna formattazione e impaginazione. La tabella "STrecensioni"
 presenta una chiave esterna legata all'id dell'utente, questo fa si che ogni recensione sia associata necessariamente ad un'utente registrato e quindi che 
 l'amministratore possa effettivamente intervenire sull'utente (ban) responsabile di eventuali recensioni indesiderate.
 
 - carrello.php. In questo contesto vengono all'effettivo usate le variabili di sessione salvate durante l'aggiunta dei prodotti al carrello, se non sono presenti
-verrà restituito il relativo avviso e non apparirà il totale del carrello. Qualore esistano le variabili di sessione inerenti al carrello_music e/o al
-carrello_movie, verrà scandito il rispettivo array multidimensionale e "letta" la sua seconda chiave (relativa all'id del prodotto aggiunto al carrello) al fine 
-di individuare i prodotti aggiunti al carrello dall'utente. L'interrogazione al database è comunque necessaria per prelevare le informazioni del prodotto stesso.
-Ogni prodotto nel carrello sarà elencato ed identificato da una piccola icona di categoria, dal nome/titolo e dal prezzo. Sarà presente anche un pulsante di 
-eliminazione, supportato da un input di tipo hidden, che cancellerà la variabile di sessione associata a quel prodotto. Qualora l'utente risulti registrato e
-proceda all'acquisto, gli verrà proposto di lasciare una recensione con apposita form con input di tipo radio per la valutazione e di tipo text-area per il titolo
-e la descrizione della recensione. Procedendo all'invio avverrà un
+verrà restituito il relativo avviso. Qualora esistano le variabili di sessione inerenti al carrello_music e/o al carrello_movie, verrà scandito il rispettivo 
+array multidimensionale e letta la sua seconda chiave (relativa all'id del prodotto aggiunto al carrello) al fine di individuare i prodotti aggiunti al carrello
+dall'utente. L'interrogazione al database è comunque necessaria per prelevare le informazioni del prodotto stesso. Ogni prodotto nel carrello sarà elencato ed 
+identificato da una piccola icona di categoria, dal titolo e dal prezzo. Sarà presente anche un pulsante di eliminazione, supportato da un input di tipo 
+hidden, che cancellerà la variabile di sessione associata a quel prodotto. Qualora l'utente risulti registrato e proceda all'acquisto, gli verrà proposto di 
+lasciare una recensione con apposita form con input di tipo radio, per la valutazione, e di tipo text-area, per il titolo e la descrizione. All'invio della 
+recensione apparirà un messaggio in relazione alla valutazione dell'utente.
+
+- amministratore.php. Pagina riservata all'amministratore, dedicata alla gestione del database. Le tabelle vengono popolate attraverso una SELECT ed istruzioni 
+iterative che incrementano il loro popolamento riga per riga. Questa tecnica è stata usata in contesti simili in altre pagine del sito, permette di creare 
+strutture flessibili in base al numero di elementi da visualizzare. L'amministratore, attraverso appositi pulsanti, può intervenire sul database usufruendo di
+un'interfaccia grafica semplice ed intuitiva. L'eliminazione dei record è prevista per ogni tabella, ma nello specifico contesto della tabella utenti è stato
+implementato un codice differente, per evitare incongruenze nel database. Infatti, come già accennato, la tabella utenti presenta delle dipendenze dalla tabella
+recensioni a causa della chiave esterna presente in quest'ultima. Eliminare un utente che abbia scritto delle recensioni causa una violazione di integrità 
+referenziale. Sebbene l'opzione MySql ON DELETE CASCADE avrebbe potuto risolvere questo problema facilmente, è stato preferito, a scopo didattico, fare delle 
+opportune verifiche sull'eventuale presenza di recensioni associate all'id utente da eliminare. In caso di esito positivo, avverrà prima la loro eliminazione, 
+poi quella dell'utente associato. La gestione della tabella utenti prevede anche il pulsante di ban/unban per bloccare/sbloccare l'accesso al sito di un 
+determinato utente. La tabella movie e music prevede la cancellazione dei singoli prodotti ma anche del loro inserimento. L'inserimento dei prodotti nel database
+è facilitato da appositi campi di input di tipo text-area, ognuno dei quali rappresenta un'attributo del record da inserire nel database. Infine la tabella delle
+recensioni permette la sola eliminazione del record indesiderato. 
