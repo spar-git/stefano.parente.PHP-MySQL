@@ -1,11 +1,16 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['accessoPermesso']))       // impedisce l'accesso a chi non è iscritto
+if (!isset($_SESSION['accessoPermesso'])){       // impedisce l'accesso a chi non è iscritto
     header('Location: login.php');
-if(isset($_SESSION['accessoPermesso']))         // impedisce l'accesso a chi non è amministratore 
-    if ($_SESSION['tipologia']!=2)
+    exit();
+}
+if(isset($_SESSION['accessoPermesso'])) {        // impedisce l'accesso a chi non è amministratore 
+    if ($_SESSION['tipologia']!=2) {
         header('Location: login.php');
+        exit();
+    }
+}
 
 require_once("./connessione.php");
 $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
