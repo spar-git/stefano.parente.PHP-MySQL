@@ -8,7 +8,7 @@ $mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
 if (isset($_POST["invio"])) {
     $music_id = $_POST["music_id"];
 
-    $_SESSION["carrello_music"][$music_id] = "Prodotto aggiunto al carrello!";
+    $_SESSION["carrello_music"][$music_id] = "Prodotto aggiunto al carrello!"; //variabile di sessione (array associativo multidimensionale)
 }
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
