@@ -8,7 +8,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {     // tale condizione sar
 <div class="menu-container">
     <nav class="menu">
         <div class="logo">
-            <img src="logo.png" alt="Logo">
+            <img src="img/logo.png" alt="Logo">
         </div>
         <ul class="menu-list">
             <li><a href="homePage.php">Home</a></li>
