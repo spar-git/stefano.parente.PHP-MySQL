@@ -53,7 +53,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <div class="recensioni-box">
     <h2> Cosa dicono di noi</h2>
     <?php
-    $recensioni_presenti=false;
+    $recensioni_presenti=false;         // partiamo con l'ipotesi che non ci siano recensioni
     $sql = "SELECT $STrecensioni_table_name.userId, $STuser_table_name.userName, $STuser_table_name.userName, $STrecensioni_table_name.title, $STrecensioni_table_name.descrizione, $STrecensioni_table_name.stelle 
         FROM $STrecensioni_table_name
         INNER JOIN $STuser_table_name ON $STrecensioni_table_name.userId = $STuser_table_name.userId";
@@ -61,7 +61,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 
     if ($resultQ) {
         while ($row = $resultQ->fetch_assoc()) {
-            $recensioni_presenti=true;
+            $recensioni_presenti=true;          // qui scopriamo che effettivamente ci sono recensioni e la variabile acquisisce "true"
             echo "<div class=\"recensione\">
                 <p style=\"font-size: 13px\">Utente: " . $row["userName"] . "<br>
                 Valutazione: " . $row["stelle"] . "/5</p>
@@ -69,9 +69,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 <p>" . $row["descrizione"] . "</p>
             </div>";
         }
-    } else 
+    } else                                      
         echo "Errore nella query: " . $mysqliConnection->error;
-    if (!$recensioni_presenti)
+    if (!$recensioni_presenti)                  // se entriamo qui la variabile $recensioni_presenti non è mai cambiata e resta "false"
         echo "<p>Non ci sono ancora recensioni del sito...</p>"
     ?>
 </div>
