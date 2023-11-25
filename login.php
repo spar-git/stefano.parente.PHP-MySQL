@@ -41,7 +41,7 @@ if (isset($_POST['invio'])) {                                        //è stato 
         exit();
       }
       else {                                //...altrimenti l'utente è bannato e non può accedere al sito
-        $messaggio ="!!! Sei stato bannato dal sito dall'admin. Pertanto non potrai pi&uacute accedere ai vantaggi!!!";
+        $messaggio ="!!! Sei stato bannato dal sito dall'admin. Pertanto non potrai pi&uacute accedere ai vantaggi !!!";
       }
     }
     else
@@ -77,12 +77,12 @@ if (isset($_POST['registrati'])||isset($_POST['registrati2'])) {
         if (($_POST['password'])==($_POST['password2'])) {      //se le due password coincidono, procediamo alla registrazione dell'utente nel database
 
           $sql = "INSERT INTO $STuser_table_name
-	              (userName, password, tipologia, sommeSpese, puntiFedeltà, stato)
-	              VALUES ('{$_POST['userName']}', '{$_POST['password']}', '1', '0', '0', '1')
+	              (userName, password, tipologia, stato)
+	              VALUES ('{$_POST['userName']}', '{$_POST['password']}', '1', '1')
 	              ";
           if (!$resultQ = mysqli_query($mysqliConnection, $sql)){
-          printf("Impossibile popolare tabella STuser.\n");
-          exit();
+            printf("Impossibile popolare tabella STuser.\n");
+            exit();
           }
        
           $submit="<input class=\"button\" type=\"submit\" name=\"invio\" value=\"Accedi\">
