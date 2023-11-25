@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-require_once("./connessione.php");
-
-$mysqliConnection = new mysqli("localhost", "root", "pass123", $db_name);
+require_once("./setup/connessione.php");
+if (!$mysqliConnection->select_db($db_name)) {
+    echo "Errore nella selezione del database: " . $mysqliConnection->error;
+}
 
 if (isset($_POST["invio"])) {
     $music_id = $_POST["music_id"];
@@ -19,7 +20,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<link rel="stylesheet" type="text/css" href="mieistili.css">
+	<link rel="stylesheet" type="text/css" href="style/mieistili.css">
 	<title>Scarica la tua musica</title>
 </head>
 
@@ -45,7 +46,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			while ($row = $resultQ->fetch_assoc()) {
 				echo "<div class=\"prodotti\">
 					<h2>" . $row["title"] . "</h2>
-					<img style=\"width: 100px\" src=\"logomusic.png\">
+					<img style=\"width: 100px\" src=\"img/logomusic.png\">
 					<p>Autore: " . $row["autore"] . "</p>
 					<h3>Prezzo: " . $row["costoMusic"] . " €</h3>
 					
